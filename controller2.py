@@ -36,34 +36,6 @@ if init:
 reduction = 400000
 axisTh = 0.03 
 
-
-
-
-############
-##vibration#
-############
-## Define necessary structures
-#class XINPUT_VIBRATION(ctypes.Structure):
-#    _fields_ = [("wLeftMotorSpeed", ctypes.c_ushort), ("wRightMotorSpeed", ctypes.c_ushort)]
-#xinput = ctypes.windll.xinput1_3 # Load Xinput.dll
-## Set up function argument types and return type
-#XInputSetState = xinput.XInputSetState
-#XInputSetState.argtypes = [ctypes.c_uint, ctypes.POINTER(XINPUT_VIBRATION)]
-#XInputSetState.restype = ctypes.c_uint
-## Now we're ready to call it. Set left motor to 100%, right motor to 50%
-## for controller 0
-##vibration = XINPUT_VIBRATION(65535, 32768)
-##XInputSetState(0, ctypes.byref(vibration))
-## You can also create a helper function like this:
-#def set_vibration(controller, left_motor, right_motor):
-#    vibration = XINPUT_VIBRATION(int(left_motor * 65535), int(right_motor * 65535))
-#    XInputSetState(controller, ctypes.byref(vibration))  
-## ... and use it like so
-##set_vibration(0, 0.2, 0.2)
-################
-##end vibration#
-################
-
 #initialize quadrant variables
 q1on = 0
 q2on = 0
@@ -444,15 +416,11 @@ def check_landing():
         own["vib_Countdown"] = 14
         cont.activate(own.actuators["Vibration"])
         #print("vibrate")
-        #killall() 
-        #if own["reg_nmanual"] == 0 and own["fak_nmanual"] == 0 and own["reg_manual"] == 0 and own["fak_manual"] == 0:
         if own['manual_v2'] == 0 and grindDar == 0:           
             if STANCE == 0:
                 own['requestAction'] = 'reg_land'
-                #skater.playAction("reg_land", 1,20, layer=LAND_LAYER, blendin=5, priority=7, layer_weight=0, play_mode=0, speed=.5)
             elif STANCE == 1:
                 own['requestAction'] = 'fak_land'                
-                #skater.playAction("fak_land", 1,20, layer=LAND_LAYER, blendin=5, priority=7, layer_weight=0, play_mode=0, speed=.5)
         killact(2)
         killact(3)
         killact(4)
@@ -469,9 +437,6 @@ def check_landing():
     if vib_countdown == 1:
         stopAnims()
         stance()
-    # if touched == False and lf_ground == True:    
-    #     if own['jump_stance'] != 3:
-    #         own['jump_stance'] = 3    
         
 
 #air anim
@@ -630,23 +595,11 @@ if own['last_fak_nmanual'] == 1 and own['fak_nmanual'] == 0:
 
 
 def reg_stance_left_off():
-    killact(10)  
-    killact(32)
     LAST_LEFT = own["LAST_LEFT"]
-    if LAST_LEFT == 1 and rUD < .06:
-        skater.playAction("nreg_left", 30,40, layer=33, blendin=10, layer_weight=0, play_mode=0, speed=2)
-        #deck.playAction("a_reg_left", 30,40, layer=33, play_mode=0, speed=2)
-        #deck.playAction("a_reg_right", 30,40, layer=501, play_mode=0, speed=.5)
     own["LAST_LEFT"] = 0   
 
 def reg_stance_right_off():
-    killact(11) 
-    killact(34)
     LAST_RIGHT = own["LAST_RIGHT"]
-    #if LAST_RIGHT == 1 and rUD < .06:
-        #skater.playAction("nreg_right", 30,40, layer=35, blendin=10, layer_weight=0, play_mode=0, speed=2)
-        #deck.playAction("a_reg_left", 30,40, layer=33, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
-        #deck.playAction("a_reg_right", 30,40, layer=501, play_mode=0, speed=.5)
     own["LAST_RIGHT"] = 0  
     
 def reg_stance_on():
@@ -654,23 +607,11 @@ def reg_stance_on():
     playing = deck.isPlayingAction(40)
     if own["revert_timer"] < 1 and own['manual_v2'] == 0 and playing == 0:
         own['requestAction'] = 'reg_roll'
-#        skater.playAction("nreg", 1,60, layer=2, blendin=4, layer_weight=0, play_mode=1, speed=.5)
-#        deck.playAction("a_reg", 1,40, layer=2, blendin=0, blend_mode=0, play_mode=1, speed=.5)
-#        trucks.playAction("a_reg", 1,40, layer=2, blendin=2, layer_weight=0, play_mode=1, speed=.5)
 def reg_stance_off():
     killact(2)   
     
 def reg_manual_on():
     own['requestAction'] = 'reg_manual'
-#    skater.playAction("reg_manual", 10,70, layer=222, blendin=0, layer_weight=.1, play_mode=1, speed=.5)                
-#    deck.playAction("a_reg_manual", 10,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    trucks.playAction("a_reg_manual", 10,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    if own["last_reg_manual"] == 0:
-#        reg_stance_left_off()
-#        reg_stance_right_off()
-#        skater.playAction("reg_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)                
-#        deck.playAction("a_reg_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)
-#        trucks.playAction("a_reg_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)        
     if own["reg_manual_timer"] == 41:
         killact(3000)
         killact(3001)
@@ -690,15 +631,6 @@ def reg_manual_off():
 def fak_manual_on():
     #killall()
     own['requestAction'] = 'fak_manual'
-#    skater.playAction("fak_manual", 10,70, layer=222, blendin=0, layer_weight=.1, play_mode=1, speed=.5)                
-#    deck.playAction("a_fak_manual", 10,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    trucks.playAction("a_fak_manual", 10,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    if own["last_fak_manual"] == 0:
-#        fak_stance_left_off()
-#        fak_stance_right_off()
-#        skater.playAction("fak_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)                
-#        deck.playAction("a_fak_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)
-#        trucks.playAction("a_fak_manual", 1,10, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)        
     if own["fak_manual_timer"] == 41:
         killact(3000)
         killact(3001)
@@ -720,15 +652,6 @@ def fak_manual_off():
 #######
 def reg_nmanual_on():
     own['requestAction'] = 'reg_nmanual'
-#    skater.playAction("reg_nmanual", 12,70, layer=222, blendin=0, layer_weight=.1, play_mode=1, speed=.5)                
-#    deck.playAction("a_fak_manual", 12,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    trucks.playAction("a_fak_manual", 12,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    if own["last_reg_nmanual"] == 0:
-#        reg_stance_left_off()
-#        reg_stance_right_off()
-#        skater.playAction("reg_nmanual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)                
-#        deck.playAction("a_fak_manual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)
-#        trucks.playAction("a_fak_manual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)        
     if own["reg_nmanual_timer"] == 41:
         killact(3000)
         killact(3001)
@@ -746,17 +669,7 @@ def reg_nmanual_off():
     killact(34) 
     
 def fak_nmanual_on():
-    #killall()
     own['requestAction'] = 'fak_nmanual'
-#    skater.playAction("fak_nmanual", 12,70, layer=222, blendin=0, layer_weight=.1, play_mode=1, speed=.5)                
-#    deck.playAction("a_reg_manual", 12,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    trucks.playAction("a_reg_manual", 12,70, layer=222, blendin=0, layer_weight=.9, play_mode=1, speed=.5)
-#    if own["last_fak_nmanual"] == 0:
-#        fak_stance_left_off()
-#        fak_stance_right_off()
-#        skater.playAction("fak_nmanual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)                
-#        deck.playAction("a_reg_manual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)
-#        trucks.playAction("a_reg_manual", 1,11, layer=3000, blendin=2, layer_weight=.8, play_mode=0, speed=.5)        
     if own["fak_nmanual_timer"] == 41:
         killact(3000)
         killact(3001)
@@ -784,33 +697,22 @@ def reg_stanceinc_off():
     
                 
 def reg_stance_left_on():
-    #if own["reg_manual"] == 0 and own["fak_manual"] == 0 and own["reg_nmanual"] == 0 and own["fak_nmanual"] == 0 :
     if own['manual_v2'] == 0 and own["revert_timer"] < 1:
         own['requestAction'] = 'reg_turnLeft'    
-#        skater.playAction("nreg_left", 10,30, layer=10, blendin=10, layer_weight=0, play_mode=1, speed=.5) 
-#        deck.playAction("a_reg_left", 10,30, layer=10, blendin=2, layer_weight=0, play_mode=1, speed=.5)
         LAST_LEFT = own["LAST_LEFT"]
-        #layer 100 is frame 20
         playing_action_frame = skater.getActionFrame(LAND_LAYER)
-        #print(playing_action_frame, "PAF")
         if LAST_LEFT == 0 or (playing_action_frame > (LAND_END - 2) and playing_action_frame < (LAND_END - 1)):
             LAST_LEFT = 1
-#            skater.playAction("nreg_left", 1,10, layer=32, blendin=10, layer_weight=0, play_mode=0, speed=.5)
-#            deck.playAction("a_reg_left", 1,10, layer=32, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
         own["LAST_LEFT"] = 1 
                         
          
 def reg_stance_right_on():
     if own['manual_v2'] == 0 and own["revert_timer"] < 1:
         own['requestAction'] = 'reg_turnRight' 
-#        skater.playAction("nreg_right", 10,30, layer=11, blendin=10, layer_weight=0, play_mode=1, speed=.5)                
-#        deck.playAction("a_reg_right", 10,30, layer=11, blendin=2, layer_weight=0, play_mode=1, speed=.5)
         LAST_RIGHT = own["LAST_RIGHT"]
         playing_action_frame = skater.getActionFrame(LAND_LAYER)
         if LAST_RIGHT == 0 or (playing_action_frame > (LAND_END - 2) and playing_action_frame < (LAND_END - 1)):
             LAST_RIGHT = 1
-#            skater.playAction("nreg_right", 1,10, layer=34, blendin=10, layer_weight=0, play_mode=0, speed=.5)
-#            deck.playAction("a_reg_right", 1,10, layer=34, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
         own["LAST_RIGHT"] = 1 
               
    
@@ -818,61 +720,38 @@ def fak_stance_on():
     playing = deck.isPlayingAction(40)
     if own['manual_v2'] == 0 and own["revert_timer"] < 1 and playing == 0:
         own['requestAction'] = 'fak_roll'
-        #skater.playAction("nfak", 1,60, layer=3, blendin=4, priority=9, layer_weight=0, play_mode=1, speed=.5)                
-        #deck.playAction("a_reg", 1,40, layer=3, blendin=2, priority=9, layer_weight=0, play_mode=1, speed=.5)
-        #trucks.playAction("a_reg", 1,40, layer=3, blendin=2, priority=9, layer_weight=0, play_mode=1, speed=.5)    
 def fak_stance_off():
     killact(3)
     
 def fak_stance_left_on():
     if own['manual_v2'] == 0 and own["revert_timer"] < 1:
         own['requestAction'] = 'fak_turnLeft'     
-        #skater.playAction("nfak_left", 10,30, layer=12, blendin=10, layer_weight=0, play_mode=1, speed=.5) 
-        #deck.playAction("a_reg_right", 10,30, layer=12, blendin=2, layer_weight=0, play_mode=1, speed=.5)
         LAST_LEFT_FAK = own["LAST_LEFT_FAK"]
         playing_action_frame = skater.getActionFrame(LAND_LAYER)
         if LAST_LEFT_FAK == 0 or (playing_action_frame > (LAND_END - 2) and playing_action_frame < (LAND_END - 1)):
             LAST_LEFT_FAK = 1
-            #skater.playAction("nfak_left", 1,10, layer=36, blendin=10, layer_weight=0, play_mode=0, speed=.5)
-            #deck.playAction("a_reg_right", 1,10, layer=36, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
         own["LAST_LEFT_FAK"] = 1                      
 def fak_stance_left_off():
     killact(12)  
     killact(36)
     LAST_LEFT_FAK = own["LAST_LEFT_FAK"]
-    #if LAST_LEFT_FAK == 1 and rUD < .06:
-        #skater.playAction("nfak_left", 30,40, layer=33, blendin=10, layer_weight=0, play_mode=0, speed=2)
-        #deck.playAction("a_reg_left", 30,40, layer=33, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
-        #deck.playAction("a_reg_right", 30,40, layer=501, play_mode=0, speed=.5)
     own["LAST_LEFT_FAK"] = 0
     
 def fak_stance_right_on():
     if own['manual_v2'] == 0 and own["revert_timer"] < 1:
         own['requestAction'] = 'fak_turnRight' 
-        #skater.playAction("nfak_right", 10,30, layer=13, blendin=10, layer_weight=0, play_mode=1, speed=.5)                
-        #deck.playAction("a_reg_left", 10,30, layer=13, blendin=2, layer_weight=0, play_mode=1, speed=.5)
         LAST_RIGHT_FAK = own["LAST_RIGHT_FAK"]
-        #playing_action_frame = skater.getActionFrame(LAND_LAYER)  
-        #if LAST_RIGHT_FAK == 0 or (playing_action_frame > (LAND_END - 2) and playing_action_frame < (LAND_END - 1)):
-            #LAST_RIGHT_FAK = 1
-            #skater.playAction("nfak_right", 1,10, layer=37, blendin=10, layer_weight=0, play_mode=0, speed=.5)
-            #deck.playAction("a_reg_left", 1,10, layer=37, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
         own["LAST_RIGHT_FAK"] = 1        
 def fak_stance_right_off():
     killact(13) 
     killact(37)
     LAST_RIGHT_FAK = own["LAST_RIGHT_FAK"]
-    #if LAST_RIGHT_FAK == 1 and rUD < .06:
-        #skater.playAction("nfak_right", 30,40, layer=33, blendin=10, layer_weight=0, play_mode=0, speed=2)
-        #deck.playAction("a_reg_left", 30,40, layer=33, blendin=10, layer_weight=0, priority=7, play_mode=0, speed=.5)
-        #deck.playAction("a_reg_right", 30,40, layer=501, play_mode=0, speed=.5)
     own["LAST_RIGHT_FAK"] = 0    
     
 def reg_air_on():
     playing = deck.isPlayingAction(fliplay)
     if playing == False:
         own['requestAction'] = 'reg_air'        
-        #skater.playAction("reg_air", 1,60, layer=4, blendin=2, priority=6, layer_weight=0, play_mode=1, speed=.5)    
 
 def reg_air_off():
     killact(4)    
@@ -880,7 +759,6 @@ def fak_air_on():
     flipping = skater.isPlayingAction(fliplay)
     if flipping == False:
         own['requestAction'] = 'fak_air' 
-        #skater.playAction("fak_air", 1,60, layer=5, blendin=2, priority=9, layer_weight=0, play_mode=1, speed=.5)      
   
 def fak_air_off():
     killact(5)
@@ -911,28 +789,13 @@ def stance():
                     reg_manual_off()                   
                     fak_manual_off()
                 reg_stance_on()
-#            if own['last_manual'] == 1:
-#                if STANCE == 0:
-#                    if fak_manual == 1:
-#                        fak_manual = 0
-#                        reg_nmanual = 1
-#                        own['reg_nmanual'] = 1
-#                        print("changing manual")
-                                            
-            #if reg_manual == 1 and fak_manual == 0 and reg_nmanual == 0 and fak_nmanual == 0:
-            #if reg_manual == 1 and fak_manual == 0 and reg_nmanual == 0:
             if own['manual_v2_type'] == 'reg manual':    
                 reg_manual_on()                   
-            #elif reg_manual == 0 and fak_manual == 0 and reg_nmanual == 1 and fak_nmanual == 0:
             elif own['manual_v2_type'] == 'reg nose manual':    
                 reg_nmanual_on()
-            #elif reg_manual == 0 and fak_manual == 1 and reg_nmanual == 0 and fak_nmanual == 0: 
             elif own['manual_v2_type'] == 'fak manual':
-                #reg_nmanual_on()
                 fak_manual_on()
-            #elif reg_manual == 0 and fak_manual == 0 and reg_nmanual == 0 and fak_nmanual == 1: 
             elif own['manual_v2_type'] == 'fak nose manual':
-                #reg_manual_on()
                 fak_nmanual_on()
         if STANCE == 1:
             reg_manual = own['reg_manual']
@@ -940,9 +803,6 @@ def stance():
             reg_nmanual = own['reg_nmanual']
             fak_nmanual = own["fak_nmanual"]
             if LAST_STANCE != STANCE or LAST_GROUND != r_ground.triggered:    
-                #fak_manual_off()
-                #reg_manual_off()
-                #print("turn man off")
                 reg_stance_off()
                 reg_air_off()
                 fak_air_off 
@@ -952,21 +812,14 @@ def stance():
                     fak_manual_off()
                     reg_manual_off()
                 fak_stance_on()                    
-            #if reg_manual == 0 and fak_manual == 1 and reg_nmanual == 0 and fak_nmanual == 0:
             if own['manual_v2_type'] == 'fak manual':
                 fak_manual_on()
-            #elif reg_manual == 0 and fak_manual == 0 and reg_nmanual == 0 and fak_nmanual == 1:
             elif own['manual_v2_type'] == 'fak nose manual':
                 fak_nmanual_on()
-            #elif reg_manual == 1 and fak_manual == 0 and reg_nmanual == 0 and fak_nmanual == 0: 
             elif own['manual_v2_type'] == 'reg manual':
-                #fak_nmanual_on() 
                 reg_manual_on()
-            #elif reg_manual == 0 and fak_manual == 0 and reg_nmanual == 1 and fak_nmanual == 0: 
             elif own['manual_v2_type'] == 'reg nose manual':
-                #fak_manual_on() 
                 reg_nmanual_on()                     
-            #fak_stance_on()
         if own["Pump"] == False:
             
             if lLR < -turnsens and STANCE == 0:            
@@ -987,10 +840,8 @@ def stance():
                 fak_stance_right_off()                       
     #air
     playing = deck.isPlayingAction(fliplay)
-    #playing = False
     if r_ground.triggered == False and playing == False and flipping == False:
         if STANCE == 0:
-            #if LAST_STANCE != STANCE or r_ground.triggered:
             if LAST_STANCE != STANCE or LAST_GROUND != r_ground.triggered:                
                 fak_air_off()
                 reg_stance_off()
@@ -999,8 +850,6 @@ def stance():
                 reg_stance_right_off()
                 fak_stance_left_off()  
                 fak_stance_right_off() 
-#                reg_manual_off()
-#                fak_manual_off()
             reg_air_on()
         if STANCE == 1:
             if LAST_STANCE != STANCE or LAST_GROUND != r_ground.triggered:
@@ -1011,8 +860,6 @@ def stance():
                 reg_stance_right_off()
                 fak_stance_left_off()  
                 fak_stance_right_off()  
-#                reg_manual_off()
-#                fak_manual_off()                        
             fak_air_on()
     if grindHit == True:
         reg_stance_off()
@@ -1029,9 +876,6 @@ def jump():
     fak_manual_off()
     reg_nmanual_off()
     fak_nmanual_off()    
-    #grindold
-    #fak_manual_off()
-    #print(JUMPSTRENGTH)
     cont.deactivate(wallrideconstL)
     cont.deactivate(wallrideconstR)    
     if JUMPSTRENGTH != 0:
@@ -1120,9 +964,6 @@ def jump():
         own["Q6oncd"] = 0
         own["Q7oncd"] = 0
         own["Q8oncd"] = 0         
-#        if rot.z < .4:
-#            force = [-1, linVelocity.y, linVelocity.z]
-#            own.setLinearVelocity(force, local)
     if own['jump_timer'] == 60:
         own['jump_timer'] = 59
 
@@ -1155,12 +996,6 @@ def pump():
         if rot.z < PUMP_SENS and rot.z <= PUMP_SPEED_SENS:
             own.setLinearVelocity(force2, local)
         own['requestAction'] = 'fak_pump'
-        #skater.playAction("nfak_pump.001", 1,60, layer=20, priority=8, blendin=10, play_mode=1, speed=.5)
-        #skater.playAction("nopos", 1,40, layer=0, priority=7, blendin=10, play_mode=3, speed=.5)    
-        if lastpump == False:        
-            #skater.playAction("nfak_pump_in", 1,20, layer=350, priority=8, blendin=10, play_mode=0, speed=1)
-            #cont.activate(fak_pumpin)
-            pass
     #switch
     if linVelocity.x > -MAX_VEL and linVelocity.x <= 0 and STANCE == 0 and grindHit == False:
         countdown = COUNTDOWN
@@ -1174,14 +1009,6 @@ def pump():
         if rot.z < PUMP_SENS and rot.z <= PUMP_SPEED_SENS:
             own.setLinearVelocity(force2, local)
         own['requestAction'] = 'reg_pump'    
-        #skater.playAction("nreg_pump", 1,60, layer=21, priority=8, blendin=10, play_mode=1, speed=.5)
-        
-        if lastpump == False:
-            #skater.playAction("nreg_pump_in", 1,20, layer=350, priority=8, blendin=10, play_mode=0, speed=1)
-            #cont.activate(reg_pumpin)
-            pass
-    #force = [ 0, 0, -200]
-    #own.applyForce(force, 0) # apply force    
     own["Pump"] = True
     own["lastPump"] = True
             
@@ -1189,7 +1016,6 @@ def roll():
     if r_ground.triggered == 1:  
         pass      
 def stop():
-    #if r_ground.triggered == 1 and STANCE == False and linVelocity.x < -.1:
     if r_ground.triggered == 1 and STANCE == False:        
         skater.playAction("reg_stop", 1,30, layer=18, priority=59, blendin=10, play_mode=1, speed=.5)
         yvel = linVelocity.x * .985
@@ -1197,7 +1023,6 @@ def stop():
         own.setLinearVelocity(force, True)
         if lastStop == False:
             skater.playAction("reg_stopin", 1,15, layer=61, priority=3, blendin=10, play_mode=0, speed=.5)
-    #elif r_ground.triggered == 1 and STANCE == True and linVelocity.x > .1:
     elif r_ground.triggered == 1 and STANCE == True:
         skater.playAction("fak_stop", 1,30, layer=19, priority=7, blendin=10, play_mode=1, speed=.5)
         yvel = linVelocity.x * .985
@@ -1206,9 +1031,6 @@ def stop():
         if lastStop == False:
             skater.playAction("fak_stopin", 1,15, layer=62, priority=3, blendin=10, play_mode=0, speed=.5)
     own["lastStop"] = True
-#    if linVelocity.x < .1:
-#        force = [0, 0, linVelocity.z]
-#        own.setLinearVelocity(force, True)
     if linVelocity.x < .05 and linVelocity.x > -.05 and own["lastStop"] == True:
         own["lastStop"] == False   
         skater.stopAction(7)
@@ -1226,16 +1048,9 @@ def oposin():
     if (r_ground.triggered == 1) and STANCE == False and landing == 0 and own['manual'] == 0:
         if grindold == 0:
             own['requestAction'] = 'reg_opos'
-        #if lastopos == False:
-            #skater.playAction("noposin", 1,20, layer=65, priority=3, blendin=10, play_mode=0, speed=.5)
-        #else:
-            #skater.playAction("nopos", 1,40, layer=67, priority=7, blendin=10, play_mode=1, speed=.5)    
     elif (r_ground.triggered == 1) and STANCE == True and own['manual'] == 0:
         if grindold == 0:
             own['requestAction'] = 'fak_opos'
-        #skater.playAction("fak_opos", 1,40, layer=68, priority=7, blendin=10, play_mode=1, speed=.5)
-        #if lastopos == False:
-            #skater.playAction("fak_oposin", 1,20, layer=66, priority=3, blendin=10, play_mode=0, speed=.5)
     else:
         killact(65)
         killact(66)
@@ -1249,19 +1064,11 @@ def noposin():
     else:
         landing = 0    
     if (r_ground.triggered == 1) and STANCE == False and landing == 0 and own['manual'] == 0:
-        #pass
         if grindold == 0:
             own['requestAction'] = 'reg_nopos'
-#        skater.playAction("nnopos", 1,40, layer=73, priority=8, blendin=10, play_mode=1, speed=.5)
-#        if lastnopos == False:
-#            skater.playAction("nnoposin", 1,20, layer=71, priority=4, blendin=10, play_mode=0, speed=.5)
     elif (r_ground.triggered == 1) and STANCE == True and own['manual'] == 0:
         if grindold == 0:
             own['requestAction'] = 'fak_nopos'
-#        if lastnopos == False:
-#            skater.playAction("fak_noposin", 1,20, layer=72, priority=4, blendin=10, play_mode=0, speed=.5)
-#        else:
-#            skater.playAction("fak_nopos", 1,40, layer=74, priority=8, blendin=10, play_mode=1, speed=.5)                
     else:        
         killact(71)
         killact(72)
@@ -1662,7 +1469,6 @@ def backside_grab_on():
         trucks.playAction("a_reg_fp_rback", 10,10, layer=2925, priority=8, play_mode=1, speed=.5)          
     elif GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:
         own['requestAction'] = 'backside_grab'        
-        #skater.playAction("reg_bsg2", 10,30, layer=402, priority=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1678,12 +1484,9 @@ def fakfrontside_grab_on():
         trucks.playAction("a_fak_fp_rback", 10,10, layer=2925, priority=8, play_mode=1, speed=.5)     
     
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:           
-        #cont.activate(fak_frontsidegrab)
         own['requestAction'] = 'fak_frontside_grab' 
-        #skater.playAction("fak_fg", 10,30, layer=403, priority=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
-        #print("frontside_grab_on")
     elif r_ground.triggered == 1:        
         killact(403)
     
@@ -1691,9 +1494,7 @@ def fakbackside_grab_on():
     GRAB_PLAYED = own["GRAB_PLAYED"]
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:         
-        #cont.activate(fak_backsidegrab)
         own['requestAction'] = 'fak_backside_grab' 
-        #skater.playAction("fak_bg", 10,30, layer=404, priority=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1705,8 +1506,6 @@ def frontside_nose_grab_on():
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:
         own['requestAction'] = 'frontside_nose_grab' 
-        #cont.activate(fak_backsidegrab)
-        #skater.playAction("frontside_nose_grab", 10,30, layer=400, priority=5,  blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1717,8 +1516,6 @@ def frontside_tail_grab_on():
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0: 
         own['requestAction'] = 'frontside_tail_grab' 
-        #cont.activate(fak_backsidegrab)
-        #skater.playAction("frontside_tail_grab", 10,30, layer=409, priority=5,  blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1728,7 +1525,6 @@ def backside_nose_grab_on():
     GRAB_PLAYED = own["GRAB_PLAYED"]
     GRAB_ON = own["GRAB_ON"]
     #airwalk
-    #if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0 and (aBut == True):
     if GRAB_ON == True and r_ground.triggered == 0 and (aBut == True):    
         print("airwalk")
         skater.playAction("reg_airwalk", 10,30, layer=405, priority=5, blendin=5, play_mode=1, speed=.5)
@@ -1737,9 +1533,7 @@ def backside_nose_grab_on():
     
     #norm
     elif GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:   
-        #cont.activate(fak_backsidegrab)
         own['requestAction'] = 'backside_nose_grab' 
-        #skater.playAction("backside_nose_grab", 10,30, layer=405, priority=5, blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1750,8 +1544,6 @@ def backside_tail_grab_on():
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0: 
         own['requestAction'] = 'backside_tail_grab' 
-        #cont.activate(fak_backsidegrab)
-        #skater.playAction("backside_tail_grab", 10,30, layer=411, priority=5,  blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1763,8 +1555,6 @@ def fak_frontside_nose_grab_on():
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:  
         own['requestAction'] = 'fak_frontside_nose_grab' 
-        #cont.activate(fak_backsidegrab)
-        #skater.playAction("fak_frontside_nose_grab", 10,30, layer=406, priority=5, blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1774,9 +1564,7 @@ def fak_frontside_tail_grab_on():
     GRAB_PLAYED = own["GRAB_PLAYED"]
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:           
-        #cont.activate(fak_backsidegrab)
         own['requestAction'] = 'fak_frontside_tail_grab' 
-        #skater.playAction("fak_frontside_tail_grab", 10,30, layer=412, priority=5,  blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1786,9 +1574,7 @@ def fak_backside_nose_grab_on():
     GRAB_PLAYED = own["GRAB_PLAYED"]
     GRAB_ON = own["GRAB_ON"]
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:           
-        #cont.activate(fak_backsidegrab)
         own['requestAction'] = 'fak_backside_nose_grab' 
-        #skater.playAction("fak_backside_nose_grab", 10,30, layer=408, priority=5, blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1800,7 +1586,6 @@ def fak_backside_tail_grab_on():
     if GRAB_ON == True and GRAB_PLAYED == False and r_ground.triggered == 0:           
         #cont.activate(fak_backsidegrab)
         own['requestAction'] = 'fak_backside_tail_grab' 
-        #skater.playAction("fak_backside_tail_grab", 10,30, layer=410, priority=5,  blendin=5, play_mode=1, speed=.5)
         GRAB_PLAYED = True
         own["GRAB_PLAYED)"] = GRAB_PLAYED
     elif r_ground.triggered == 1:
@@ -1846,20 +1631,15 @@ def air():
     if r_ground.triggered == False and own['airup'] == 0:
          
         distance = own.getDistanceTo(gray.hitPosition)
-        #print(frame - lgf, "frames since grind")
         since_grind_buf = 3
         if gray.hitObject != None and grindDar2.triggered == False and (frame - lgf) > since_grind_buf:
-        #if gray.hitObject != None and grindDar2.triggered == False:
             if distance < .5:  
                 own.alignAxisToVect(gray.hitNormal, 2, .1)
             elif distance >= .5 and distance < 1.75:  
                 own.alignAxisToVect(gray.hitNormal, 2, .05)
             elif distance >= 1.75:  
                 own.alignAxisToVect([0.0,0.0,1.0], 2, .03)
-#            own.alignAxisToVect(gray.hitNormal, 2, .01)
         if grindDar2.triggered and (frame - lgf) > since_grind_buf:
-            #print("grindar2")  
-            #own.alignAxisToVect(gray.hitNormal, 2, .075)
             if distance < .5:  
                 own.alignAxisToVect(gray.hitNormal, 2, .1)
             elif distance >= .5 and distance < 1.75:  
@@ -1895,20 +1675,16 @@ def push():
         yvel = linVelocity15.x + SPEEDUP
         own['countdown'] = countdown
         force = [(yvel), 0, linVelocity15.z]
-        #killall()
         own.setLinearVelocity(force, local)
         own['requestAction'] = 'fak_push_goof'
-        #skater.playAction("fak_push_goof", 1,35, layer=100, blendin=2, play_mode=0, speed=.5)
     #switch
     if linVelocity15.x > -MAX_VEL and linVelocity15.x < 0 and r_ground.triggered == True and own['hippy'] == 0 and own['last_hippy'] == 0:
         countdown = COUNTDOWN
         yvel = linVelocity15.x - SPEEDUP
         own['countdown'] = countdown
         force = [(yvel), 0, linVelocity15.z]
-        #killall()
         own.setLinearVelocity(force, local)
         own['requestAction'] = 'reg_push'
-        #skater.playAction("reg_push", 1,35, layer=101, blendin=2, play_mode=0, speed=.5)
 def push_goof():
     linVelocity15 = own.linearVelocity
     local = True
@@ -1918,80 +1694,62 @@ def push_goof():
         yvel = linVelocity15.x + SPEEDUP
         own['countdown'] = countdown
         force = [(yvel), 0, linVelocity15.z]
-        #killall()
         own.setLinearVelocity(force, local)
         own['requestAction'] = 'fak_push'
-        #skater.playAction("fak_push", 1,35, layer=100, blendin=2, play_mode=0, speed=.5)
     #switch
     if linVelocity15.x > -MAX_VEL and linVelocity15.x < 0 and r_ground.triggered == True and own['hippy'] == 0 and own['last_hippy'] == 0:
         countdown = COUNTDOWN
         yvel = linVelocity15.x - SPEEDUP
         own['countdown'] = countdown
         force = [(yvel), 0, linVelocity15.z]
-        #killall()
         own.setLinearVelocity(force, local)
         own['requestAction'] = 'reg_push_goof'
-        #skater.playAction("reg_push_goof", 1,35, layer=101, blendin=2, play_mode=0, speed=.5)        
 def brfoot():
     lay = grablay + 40
-    killact(5)
-    #killall()
     if STANCE == 0:
-        skater.playAction("brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
+	skater.playAction("brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("1: Correct")
     if STANCE == 1:
         skater.playAction("fak_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED) 
-        #print("2: Correct")       
     jump()    
 def frfoot():
     lay = grablay + 40
     killact(5)
-    #killall()
     if STANCE == 0:
         skater.playAction("frfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("frfoot")
     if STANCE == 1:
         skater.playAction("fakbfrfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("!fak_frfoot.001")        
     jump()          
-    #lastpush
 def blfoot():
     lay = grablay + 40
     killact(5)
-    #killall()
     if STANCE == 0:
         skater.playAction("blfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("blfoot")
     if STANCE == 1:
         skater.playAction("fakfrfoot.001", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("correct fakfrfoot.001")
     jump() 
 def flfoot():
     lay = grablay + 40
     killact(5)
-    #killall()
     if STANCE == 0:
         skater.playAction("flfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
-        #print("3: Correct")
     if STANCE == 1:
         skater.playAction("fak_flfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED) 
-        #print("4: wrong - fak_flfoot")       
     jump()         
 def rollsound():
     #onground
@@ -2050,8 +1808,6 @@ def rollsound():
         if (linVelocity.x > num1 and linVelocity.x < num2) or (linVelocity.x < -num1 and linVelocity.x > -num2):   
             own.actuators["sroll"].volume = .1
             own.actuators["sroll"].pitch = 1.1 
-        #play sound
-        #own.actuators["sroll"].volume = .1
         own.actuators['sroll'].mode = 2
         cont.activate(own.actuators["sroll"]) 
     if grindDar == 1 or own['invert_on'] == 1:  
@@ -2069,15 +1825,12 @@ def rollsound():
     own['sroll_pitch'] = act.pitch    
         
 def wheelroll():
-    #own.actuators["sroll"].volume = .1
     #still
     if linVelocity.x <= -0.05 and linVelocity.x >= 0.05:
         wheel1.stopAction(2)
         wheel2.stopAction(2)
         wheel3.stopAction(2)
         wheel4.stopAction(2)
-        #cont.deactivate(own.actuators["sroll"])
-        #own.actuators["sroll"].stopSound() 
     #regular
     if linVelocity.x > 0.05 and linVelocity.x < .5:
         wheel2.playAction("roll1.001", 1,20, layer=2, play_mode=0, speed=.25)
@@ -2125,39 +1878,12 @@ def transspeed():
     num1 = .1
     num2 = .4
     speed = 20
-#    if rot.z > num1 and rot.z < num2 and r_ground.triggered == True:
-#        if STANCE == 1:
-#            force = [speed, 0, 0]
-#        else:
-#            force = [-speed, 0, 0]
-#        own.applyForce(force, True)
-#    num1 = .4
-#    num2 = .6
-#    speed = 40
-#    if rot.z > num1 and rot.z < num2 and r_ground.triggered == True:
-#        if STANCE == 1:            
-#            force = [speed, 0, 0]
-#        else:
-#            force = [-speed, 0, 0]            
-#        own.applyForce(force, True)
-#    num1 = .6
-#    num2 = .8
-#    speed = 20
-#    if rot.z > num1 and rot.z < num2 and r_ground.triggered == True:
-#        if STANCE == 1:
-#            force = [speed, 0, 0]
-#        else:
-#            force = [-speed, 0, 0]
-#        own.applyForce(force, True)               
     
 def turn():   
     rotamt = .02
     linVelocity2 = own.getLinearVelocity(True)
     speed = .002
-    #force = [speed, 0, 0]
-    #print(lLR)
     manual = 0
-    #if (own['fak_nmanual'] == 1 or own['reg_nmanual'] == 1 or own['fak_manual'] == 1 or own['reg_manual'] == 1): 
     if own['manual_v2'] == 1:     
         manual = 1       
         if abs(linVelocity.x) < 2:
@@ -2229,8 +1955,7 @@ def turn():
                 own.setLinearVelocity([linVelocity2.x - speed, linVelocity2.y, linVelocity2.z], 1)
             if STANCE == 1:   
                 own.setLinearVelocity([linVelocity2.x + speed, linVelocity2.y, linVelocity2.z], 1)        
-    #if lLR > (turnsens * 1.3 and grindHit == False):
-        #skater.playAction("nreg_right", 1,20, layer=23, priority=8, blendin=10, play_mode=0, speed=.5)     
+         
 #air
     if r_ground.triggered == False and lLR > turnsens and (grindHit == False or (manual == 1 and grindHit == True)) and own["wallride"] == None:
         rotamt = .07
@@ -2244,104 +1969,12 @@ def turn():
             own.applyRotation([0,0,rotamt], 1)
         if STANCE == 1:
             own.applyRotation([0,0,rotamt], 1)                      
-##### rewrite attempt     
-#    rotamt = .03
-#    linVelocity2 = own.getLinearVelocity(True)
-#    speed = .002
-#    turninc = .007 #.0025
-#    turnmult = .99
-#    turnmax = .043 #.043
-#    rlLR = 0
-#    rlLR = round(lLR, 2)
-#    rlLR2 = rlLR 
-#    rlLR = rlLR * 20.5
-#    turninc = turninc * abs(rlLR)
-#    rlLR2 = rlLR2 * 12.5
-#    turnmax = turnmax * abs(rlLR2)
-#    if abs(rlLR2) <= .6:
-#        turnmax = turnmax *.7
-#        turninc = turninc * .7
-#    manual = 0
-#    if (own['fak_nmanual'] == 1 or own['reg_nmanual'] == 1 or own['fak_manual'] == 1 or own['reg_manual'] == 1): 
-#        manual = 1       
-#        if abs(linVelocity.x) < 2:
-#            speed = .005
-#    jumpstance = own['jump_stance']
-#    if lLR > turnsens or lLR < -turnsens:
-#        own["turn"] = 1
-#    else:
-#        own["turn"] = 0
-#    if lUD > turnsens or lUD < -turnsens:
-#        own["turnud"] = 1
-#    else:
-#        own["turnud"] = 0 
-#    newz = rot.z *2    
-#    newz = (abs(newz) -2) +1  
-#    newz = abs(newz)
-#    newz = newz - 1
-#    newz = abs(newz) +1
-#    newz = round(newz,4)
-#    if newz > 2: newz == 2  
-#    turninc = (turninc * newz) * newz
-#    turnmax = turnmax * newz          
-#    if lLR > -turnsens and lLR < 0:
-#        own["leftturn"] = 0
-#        own['leftturnamt'] = turninc
-#    if lLR < -turnsens and (grindHit == False or (manual == 1 and grindHit == True)):
-#        turn = own["leftturn"]
-#        leftturnamt = own['leftturnamt']
-#        if turn < turnmax:
-#            turn = turn + leftturnamt
-#        leftturnamt = leftturnamt * turnmult   
-#        rotation = [ 0.0, 0.0, (turn)]        
-#        local = False # use world axis
-#        own.applyRotation( rotation, local)
-#        own["leftturn"] = turn 
-#        own['leftturnamt'] = leftturnamt
-#        if r_ground.triggered == True and abs(linVelocity2.x) < 5:
-#            if STANCE == 0:   
-#                own.setLinearVelocity([linVelocity2.x - speed, linVelocity2.y, linVelocity2.z], 1)
-#            if STANCE == 1:   
-#                own.setLinearVelocity([linVelocity2.x + speed, linVelocity2.y, linVelocity2.z], 1) 
-#    #right            
-#    if lLR < turnsens and lLR > 0:
-#        own["rightturn"] = 0
-#        own['rightturnamt'] = turninc
-#    if lLR > turnsens and (grindHit == False or (manual == 1 and grindHit == True)):
-#        turn = own["rightturn"]
-#        rightturnamt = own['rightturnamt']
-#        if turn < turnmax:
-#            turn = turn + rightturnamt
-#        rightturnamt = rightturnamt * turnmult 
-#        rotation = [ 0.0, 0.0, (-turn)]        
-#        local = False # use world axis
-#        own.applyRotation( rotation, local)
-#        own["rightturn"] = turn 
-#        own['rightturnamt'] = rightturnamt         
-#        if r_ground.triggered == True and abs(linVelocity2.x) < 5:
-#            if STANCE == 0:   
-#                own.setLinearVelocity([linVelocity2.x - speed, linVelocity2.y, linVelocity2.z], 1)
-#            if STANCE == 1:   
-#                own.setLinearVelocity([linVelocity2.x + speed, linVelocity2.y, linVelocity2.z], 1)            #air
-#    if r_ground.triggered == False and lLR > turnsens and (grindHit == False or (manual == 1 and grindHit == True)):
-#        rotamt = .07
-#        if STANCE == 0:
-#            own.applyRotation([0,0,-rotamt], 1)
-#        if STANCE == 1:
-#            own.applyRotation([0,0,-rotamt], 1) 
-#    if r_ground.triggered == False and lLR < -turnsens and (grindHit == False or (manual == 1 and grindHit == True)):
-#        rotamt = .07
-#        if STANCE == 0:
-#            own.applyRotation([0,0,rotamt], 1)
-#        if STANCE == 1:
-#            own.applyRotation([0,0,rotamt], 1)                      
+
 ###########
 def grindsound():
     dropin = own['dropinTimer']
     lif = own['last_invert_frame'] 
-    #if frame - lif < 3 and invert_on == 0:
     if grindSound != None and grindHit == True and own['nogrindsound'] == 0:    
-    #if grindHit == True and dropin == 0 and own['invert_on'] == 0 and own["LAST_GRIND"] == True and own["nogrindsound"] == 0 and (frame - lif > 13):
         if abs(linVelocity.x) > abs(linVelocity.y):
             vel = linVelocity.x
         elif abs(linVelocity.x) < abs(linVelocity.y):
@@ -2466,23 +2099,14 @@ def grind():
     jumpstance = own["jump_stance"]
     lif = frame - own['last_invert_frame']
     if grindHit == True and own['invert_on'] == 0 and own['footplant_on'] == False and own['manual'] == 0 and lif > 40 and own['dropinTimer'] < 30:  
-        #skater.stopAction(0)
-        #deck.stopAction(0)
-        #trucks.stopAction(0)
         gblend = 1    
-        #add grindstance?
-        #printplaying()
         if LAST_GRIND == 0:
             gt = own['grindType']
-            #print(gt)
-            #grind in
         tempstance = 3
-        #print("jumpstance: ", jumpstance, "stance: ", STANCE)
         if jumpstance != 3:
             tempstance = jumpstance
         else:
             tempstance = STANCE  
-        #print("tempstance: ", tempstance) 
         grindpos = own['grindpos']
         if grindpos == "reg_5050" and own['grindType'] == "empty":
             own['grindType'] = grindpos
@@ -2500,284 +2124,112 @@ def grind():
                     own['grindType'] = "fak_bsboard"
                 else:
                     own['grindType'] = "reg_bsboard"        
-        #if STANCE == True and LAST_GRIND == False:
         if STANCE == True:    
-            #print("jumpstance =1")
             if own['grindType'] == "reg_bsboard":
                 own['grind_stance'] = 0
                 own['requestAction'] = 'reg_bsboard'
-                #skater.playAction("reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)  
-                #deck.playAction("a_reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("play fak reg_bsboard")  
             elif own['grindType'] == "fak_bsboard":
                 own['grind_stance'] = 1
                 own['requestAction'] = 'fak_bsboard'
-                #skater.playAction("fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)  
-                #deck.playAction("a_fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("play fak fak_bsboard") 
             elif own['grindType'] == "reg_fsboard":
                 own['grind_stance'] = 0
                 own['requestAction'] = 'reg_fsboard'
-                #skater.playAction("reg_FS_Board", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_FS_Board", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_FS_Board", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("reg_FS_Board")
-
             elif own['grindType'] == "reg_tailg":
                 own['requestAction'] = 'reg_tailg'
-                #skater.playAction("reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
             elif own['grindType'] == "reg_tailgR":
                 own['requestAction'] = 'reg_tailgr'
-                #skater.playAction("reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                 
             elif own['grindType'] == "reg_tailgL":
                 own['requestAction'] = 'reg_tailgl'
-                #skater.playAction("reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                     
             elif own['grindType'] == "reg_noseg":
                 own['requestAction'] = 'reg_noseg'                
-#                skater.playAction("reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-#                deck.playAction("a_reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-#                trucks.playAction("a_reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "reg_nosegR":
-                #print("playing reg_nosegR")
                 own['requestAction'] = 'reg_nosegr'                
-                #skater.playAction("reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
             elif own['grindType'] == "reg_nosegL":
-                #print("playing reg_nosegL")
                 own['requestAction'] = 'reg_nosegl'                
-                #skater.playAction("reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                                
             elif own['grindType'] == "fak_noseg":
                 own['requestAction'] = 'fak_noseg'                
-                #skater.playAction("fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_nosegR": 
                 own['requestAction'] = 'fak_nosegr'               
-                #skater.playAction("fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_nosegL":
                 own['requestAction'] = 'reg_nosegl'                
-                #skater.playAction("fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                                
-                #print("fak_noseg")
             elif own['grindType'] == "fak_tailg":
                 own['requestAction'] = 'fak_tailg' 
-                #skater.playAction("fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_tailgR": 
                 own['requestAction'] = 'fak_tailgr'
-                #skater.playAction("fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_tailgL":
                 own['requestAction'] = 'fak_tailgl' 
-                #skater.playAction("fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)        
             
             elif own['grindType'] == "reg_tailslide":
                 own['requestAction'] = 'reg_tailslide'
                 own['grind_stance'] = 0                
-                #skater.playAction("fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE                                  
             elif own['grindType'] == "fak_tailslide":
                 own['requestAction'] = 'fak_tailslide'
                 own['grind_stance'] = 1
-                #skater.playAction("reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE 
             elif own['grindType'] == "reg_noseslide":
                 own['requestAction'] = 'reg_noseslide'
                 own['grind_stance'] = 0
-                #skater.playAction("fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE  
             elif own['grindType'] == "fak_noseslide":
                 own['requestAction'] = 'fak_noseslide'  
                 own['grind_stance'] = 1              
-                #skater.playAction("reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE                                                             
             elif own['grindType'] == "nose_stall":
                 own['requestAction'] = 'nose_stall'
-                skater.playAction("fak_nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)            
+                skater.playAction("fak_nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
                 deck.playAction("a_fak_nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
                 trucks.playAction("a_fak_nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)  
-                #print("fak_nose_stall")
             elif own['grindType'] == "tail_stall":
                 own['requestAction'] = 'tail_stall'
-                skater.playAction("fak_tail_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)            
+                skater.playAction("fak_tail_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
                 deck.playAction("a_fak_tail_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
                 trucks.playAction("a_fak_tail_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
-                #print("fak_tail_stall")                   
             else:
                 if STANCE == 0:
                     own['requestAction'] = 'reg_5050'
-                    #skater.playAction("reg_5050", 1,30, layer=700, blendin=gblend, priority=8, layer_weight=0, play_mode=1, speed=.5) 
-                    #deck.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
-                    #trucks.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
                 if STANCE == 1:
                     own['requestAction'] = 'fak_5050'
-                    #skater.playAction("fak_5050", 1,30, layer=700, blendin=gblend, priority=8, layer_weight=0, play_mode=1, speed=.5) 
-                    #deck.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
-                    #trucks.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)                        
-                #print("fak_5050")
             
         #elif STANCE == False and LAST_GRIND == False:
         elif STANCE == False:
-            #print("jumpstance =0")
             if own['grindType'] == "reg_bsboard":
                 own['grind_stance'] = 0
                 own['requestAction'] = 'reg_bsboard'
-                #skater.playAction("reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)    
-                #deck.playAction("a_reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("play reg reg_bsboard")
             elif own['grindType'] == "fak_bsboard":
                 own['grind_stance'] = 1
                 own['requestAction'] = 'fak_bsboard'
-                #skater.playAction("fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)  
-                #deck.playAction("a_fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_BS_Board2", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("play reg fak_bsboard")     
             elif own['grindType'] == "reg_tailg":
                 own['grind_stance'] = 0
                 own['requestAction'] = 'reg_tailg'
-                #skater.playAction("reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                # if STANCE == True and LAST_GRIND == 0: STANCE = False
-                # elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                # own['stance'] = STANCE    
             elif own['grindType'] == "reg_tailgR":
                 own['requestAction'] = 'reg_tailgr'
-                #skater.playAction("reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                 
             elif own['grindType'] == "reg_tailgL":
                 own['requestAction'] = 'reg_tailgl'
-                #skater.playAction("reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                            
             elif own['grindType'] == "reg_noseg":
                 own['requestAction'] = 'reg_noseg'
-#                skater.playAction("reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-#                deck.playAction("a_reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-#                trucks.playAction("a_reg_noseg.001", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #print("0 reg_noseg")
             elif own['grindType'] == "reg_nosegR":
-                #print("playing reg_nosegR")   
                 own['requestAction'] = 'reg_nosegr'             
-                #skater.playAction("reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "reg_nosegL":
-                #print("playing reg_nosegL")   
                 own['requestAction'] = 'reg_nosegl'             
-                #skater.playAction("reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                                
             elif own['grindType'] == "fak_noseg":
                 own['requestAction'] = 'fak_noseg'
-                #skater.playAction("fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_noseg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)        
-                #print("0 fak_noseg")
             elif own['grindType'] == "fak_nosegR": 
                 own['requestAction'] = 'fak_nosegr'               
-                #skater.playAction("fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_nosegR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_nosegL":
                 own['requestAction'] = 'fak_nosegl'                
-                #skater.playAction("fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_nosegL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                
             elif own['grindType'] == "fak_tailg":
                 own['requestAction'] = 'fak_tailg'
-                own['requestAction'] = 'fak_tailg'
-                own['grind_stance'] = 1
-                #skater.playAction("fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailg", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_tailgR": 
                 own['requestAction'] = 'fak_tailgr'
-                #skater.playAction("fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailgR", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
             elif own['grindType'] == "fak_tailgL":
                 own['requestAction'] = 'fak_tailgl' 
-                #skater.playAction("fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tailgL", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)                       
             elif own['grindType'] == "reg_tailslide":
-                own['grind_stance'] = 0           
-                own['requestAction'] = 'reg_tailslide'     
-                #skater.playAction("fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE                                  
             elif own['grindType'] == "fak_tailslide":
                 own['grind_stance'] = 1
                 own['requestAction'] = 'fak_tailslide'
-                #skater.playAction("reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_noses", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE 
             elif own['grindType'] == "reg_noseslide":
                 own['grind_stance'] = 0
                 own['requestAction'] = 'reg_noseslide'
-                #skater.playAction("fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_fak_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE  
             elif own['grindType'] == "fak_noseslide":  
                 own['grind_stance'] = 1              
                 own['requestAction'] = 'fak_noseslide'
-                #skater.playAction("reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #deck.playAction("a_reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
-                #trucks.playAction("a_reg_tails", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
-                #if STANCE == True and LAST_GRIND == 0: STANCE = False
-                #elif STANCE == False and LAST_GRIND == 0: STANCE = True
-                #own['stance'] = STANCE
-                 
-                #if STANCE == True: STANCE = False
-                #if STANCE == False: STANCE = True
-                #print("change stance")
-                #STANCE = own["stance"]                 
             elif own['grindType'] == "nose_stall":
                 skater.playAction("nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5) 
                 deck.playAction("a_nose_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
@@ -2789,120 +2241,21 @@ def grind():
                 trucks.playAction("a_reg_tail_stall", 1,30, layer=700, blendin=gblend, play_mode=1, speed=.5)
                 #print("reg_tail_stall")                                 
             else:
-#                print("@playing last resort")                          
                 if STANCE == 0:
                     own['requestAction'] = 'reg_5050'
-#                    skater.playAction("reg_5050", 1,30, layer=700, blendin=gblend, priority=8, layer_weight=0, play_mode=1, speed=.5) 
-#                    deck.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
-#                    trucks.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
                 if STANCE == 1:
                     own['requestAction'] = 'fak_5050'
-#                    skater.playAction("fak_5050", 1,30, layer=700, blendin=gblend, priority=8, layer_weight=0, play_mode=1, speed=.5) 
-#                    deck.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)
-#                    trucks.playAction("a_reg", 1,40, layer=700, blendin=gblend, priority=9, layer_weight=0, play_mode=1, speed=.5)   
-            
-    else:
-        if own['grindCountdown'] < 16:
-            grindtype("empty")
-            killact(700)  
-            killact(705)
-            killact(706)
-            killact(707)
-            killact(708)
-#    if LAST_GRIND ==1 and grindHit ==0:
-#        #print("++++out", own['grindType'])
-#        if own['grindType'] == "reg_tailslide":
-#            own['grind_stance'] = 0                
-#            #skater.playAction("fak_noses", 30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_fak_noses", 30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_fak_noses", 30,40, layer=200, play_mode=1, speed=.5)
-
-####
-#        elif own['grindType'] == "fak_tailslide":
-#            own['grind_stance'] = 1
-#            #skater.playAction("reg_noses", 30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_reg_noses", 30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_reg_noses", 30,40, layer=200, play_mode=1, speed=.5)
-#####
-
-
-#        elif own['grindType'] == "reg_noseslide":
-#            own['grind_stance'] = 0
-#            #skater.playAction("fak_tails", 30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_fak_tails", 30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_fak_tails", 30,40, layer=200, play_mode=1, speed=.5)                
-#        elif own['grindType'] == "fak_noseslide":  
-#            own['grind_stance'] = 1              
-#            #skater.playAction("reg_tails", 30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_reg_tails", 30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_reg_tails", 30,40, layer=200, play_mode=1, speed=.5)  
-####******
-#        elif own['grindType'] == "reg_tailg":
-#            #skater.playAction("reg_tailg.001",30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_reg_tailg.001",30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_reg_tailg.001",30,40, layer=200, play_mode=1, speed=.5) 
-#        elif own['grindType'] == "reg_tailgR":
-#            skater.playAction("reg_tailgR",30,40, layer=200, play_mode=1, speed=.5)
-#            #deck.playAction("a_reg_tailgR",30,40, layer=200, play_mode=1, speed=.5)
-#            #trucks.playAction("a_reg_tailgR",30,40, layer=200, play_mode=1, speed=.5) 
-#        elif own['grindType'] == "reg_tailgL":
-#            skater.playAction("reg_tailgL",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_reg_tailgL",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_reg_tailgL",30,40, layer=200, play_mode=1, speed=.5) 
-
-#        elif own['grindType'] == "reg_noseg":                
-#            skater.playAction("reg_noseg.001",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_reg_noseg.001",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_reg_noseg.001",30,40, layer=200, play_mode=1, speed=.5)
-#        elif own['grindType'] == "reg_nosegR":                
-#            skater.playAction("reg_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_reg_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_reg_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#        elif own['grindType'] == "reg_nosegL":                
-#            skater.playAction("reg_nosegL",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_reg_nosegL",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_reg_nosegL",30,40, layer=200, play_mode=1, speed=.5)                        
-#        elif own['grindType'] == "fak_noseg":                
-#            skater.playAction("fak_noseg",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_noseg",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_noseg",30,40, layer=200, play_mode=1, speed=.5)
-#            #print("fak_noseg")
-#        elif own['grindType'] == "fak_nosegR":                
-#            skater.playAction("fak_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_nosegR",30,40, layer=200, play_mode=1, speed=.5)
-#        elif own['grindType'] == "fak_nosegL":                
-#            skater.playAction("fak_nosegL",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_nosegL",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_nosegL",30,40, layer=200, play_mode=1, speed=.5)                        
-#        elif own['grindType'] == "fak_tailg": 
-#            skater.playAction("fak_tailg",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_tailg",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_tailg",30,40, layer=200, play_mode=1, speed=.5)
-#        elif own['grindType'] == "fak_tailgR": 
-#            skater.playAction("fak_tailgR",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_tailgR",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_tailgR",30,40, layer=200, play_mode=1, speed=.5)
-#        elif own['grindType'] == "fak_tailgL": 
-#            skater.playAction("fak_tailgL",30,40, layer=200, play_mode=1, speed=.5)
-#            deck.playAction("a_fak_tailgL",30,40, layer=200, play_mode=1, speed=.5)
-#            trucks.playAction("a_fak_tailgL",30,40, layer=200, play_mode=1, speed=.5)         
-                            
-                         
                   
 def rotmult():
     if r_ground.triggered:
-        #print(linVelocity)
         num = ((rot.z * -1) +1)
         num = num * 100
-        #print(num)
 
 def airup():
     if r_ground.triggered == False:
         pos = own.worldPosition
         pos = own.worldPosition.z
         last_pos = own['last_posz']
-        #print(last_pos - pos)
         if last_pos - pos > 0:
             own['airup'] = 0
         if last_pos - pos < 0:    
@@ -2919,40 +2272,15 @@ def onramp():
             own['onramp'] = 0   
     else:
         own['onramp'] = 0        
-#    if r_ground.positive:
-#        own['rgroundhit'] = 1        
-#    else:
-#        own['rgroundhit'] = 0
 def grindtype(gtype):
     own['grindType'] = gtype
     
 def transmult():
-#    linvel = own.getLinearVelocity(True)
     lastrotz = own["rotz"]
-#    lastlinvelx = own["linvelx"]
-##up
-#    #reg
-#    if rot.z < lastrotz and linvel.x > lastlinvelx and rot.z < .9 and rot.z > .3 and linvel.x > 0:
-#        force = [ 40, 0, 0]
-#        own.applyForce(force, 1) # apply force 
-#    #fak
-#    if rot.z < lastrotz and linvel.x > lastlinvelx and rot.z < .9 and rot.z > .3 and linvel.x < 0:
-#        force = [ -40, 0, 0]
-#        own.applyForce(force, 1) # apply force 
-##down            
-#    #reg
-#    if rot.z > lastrotz and linvel.x > lastlinvelx and rot.z < .9 and rot.z > .3 and linvel.x > 0:
-#        force = [ 40, 0, 0]
-#        own.applyForce(force, 1) # apply force 
-#    #fak
-#    if rot.z > lastrotz and linvel.x > lastlinvelx and rot.z < .9 and rot.z > .3 and linvel.x < 0:
-#        force = [ -40, 0, 0]
-#        own.applyForce(force, 1) # apply force     
     linvel = own.getLinearVelocity(True)
     newx = (linvel.x + (linvel.x * .039))
     if linvel.x < 7 and linvel.x > -7 and rot.z > lastrotz and r_ground.triggered == 1 and rot.z > .3 and rot.z < .93:
         own.setLinearVelocity([newx, linvel.y, linvel.z], True)    
-        #print("what the fuck")
         
 def speedmult():
     vel = own.getLinearVelocity(True)
@@ -2960,20 +2288,14 @@ def speedmult():
     roty = math.degrees(xyz[1])     
     roty = abs(roty) 
     roty = roty * .0005
-    #print("Roty: ", roty)
     
     if abs(vel.x) > 1:
-        #mult = .0007
         mult = .0015 + roty
     else:
         mult = .000       
     mult2 = .018
     mult3 = .007
-    
-
-    
     lastrotz = own["rotz"]
-    #print(lastrotz)     
     x = vel.x * mult
     x2 = x + vel.x
     x3 = vel.x * mult2
@@ -2982,14 +2304,6 @@ def speedmult():
     x6 = x5 + vel.x
     if r_ground.triggered and vel.x < 4 and vel.x > -4:
         own.setLinearVelocity([x2, vel.y, vel.z], True)
-        #pass
-#    if STANCE == True:
-#        if lastrotz > .9 and r_ground.triggered == True and vel.x > .05 and vel.x < 4:
-#            own.setLinearVelocity([x6, vel.y, vel.z], True)  
-#        if lastrotz < .9 and r_ground.triggered == True:
-#            own.setLinearVelocity([x2, vel.y, vel.z], True)   
-#        if lastrotz < .85 and lastrotz > .7 and r_ground.triggered == True:          
-#            own.setLinearVelocity([x4, vel.y, vel.z], True)   
 
 def coping():
     if invertTouch.positive:
@@ -3003,12 +2317,9 @@ def onboard():
         cont.deactivate(cam.actuators['replayCam'])
         cont.activate(cam.actuators['Camera'])
         killall()
-        #set_vibration(0, 0.0, 0.0) 
         walklay = 40
         fliplay3 = 2060  
         ob_speed = .5
-        #add dropin anim
-             
         if STANCE == 0:
             skater.stopAction(fliplay)
             deck.stopAction(fliplay)
@@ -3017,18 +2328,11 @@ def onboard():
             if own['dropinCol'] == True:
                 print("dropinanim")
                 own['requestAction'] = reg_dropin
-                #skater.playAction("nreg_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
-                #deck.playAction("a_reg_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
-                #trucks.playAction("a_reg_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
             else:
                 own['requestAction'] = 'reg_onboard'    
-                #skater.playAction("reg_noffboard", 9,0, layer=40, priority=0, play_mode=0, speed=ob_speed)
-                #deck.playAction("a_reg_noffboard", 9,0, layer=40, priority=0, play_mode=0, speed=ob_speed)
-                #trucks.playAction("a_reg_noffboard", 9,0, layer=40, priority=0, play_mode=0, speed=ob_speed)
             force = (linVelocity.x -1, linVelocity.y, linVelocity.z)
             own.setLinearVelocity(force, True)
             own['dropinTimer'] = 60
-            #print("get on board")
         if STANCE == 1:
             skater.stopAction(fliplay)
             deck.stopAction(fliplay)
@@ -3037,28 +2341,16 @@ def onboard():
             if own['dropinTimer'] > 30:
                 print("dropinanim2")
                 own['requestAction'] = fak_dropin
-                #skater.playAction("nfak_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
-                #deck.playAction("a_fak_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
-                #trucks.playAction("a_fak_dropin", 60,80, layer=fliplay3, priority=0, play_mode=0, speed=.75)
             else: 
                 own['requestAction'] = 'fak_onboard'
-                #skater.playAction("nfak_offboard", 30,1, layer=40, priority=0, play_mode=0, speed=1.5)
-                #deck.playAction("a_fak_offboard", 30,1, layer=40, priority=0, play_mode=0, speed=1.5)
-                #trucks.playAction("a_fak_offboard", 30,1, layer=40, priority=0, play_mode=0, speed=1.5)
             force = (linVelocity.x +1, linVelocity.y, linVelocity.z)
             own.setLinearVelocity(force, True)
             own['dropinTimer'] = 60
-            #print("get on board")            
     else:
         num = own['dropinTimer']
         if num > 0:
             num = num - 1
         own['dropinTimer'] = num            
-    #if own['dropinTimer'] == 1:
-        #killact(6011) 
-        #killact(6000)    
-        #killact(6001)   
-        #killact(2)  
         
 def offboard():
         wheel1.stopAction(2)
@@ -3079,15 +2371,6 @@ def resetjumpstance():
         #print(lfg, "----- this?")  
         if own['jump_stance'] != 3:
             own['jump_stance'] = 3
-    # if r_ground.positive and grindDar == 0:
-    #     lfg = own["lF_ground_frame"]
-    #     fn = own["framenum"]
-    #     time = fn - lfg
-    #     #pass
-    #     print(LAST_GRIND)
-    #     if time > 60:
-    #         own["jump_stance"] = 3
-    #     #print("resetting jumpstance")
     
 def grass():
     try:
@@ -3099,29 +2382,22 @@ def grass():
     except:
         pass    
 def grindoutair():
-#    if own['grind_jump'] == True: 
-#        if own['grindjumpturn'] != True:
-#           own['grindjumpturn'] = True 
     skippy = 0
     linVel = own.getLinearVelocity(True)
     if own['LAST_GRIND'] == True and grindHit == True:
         own['lg_stance'] = STANCE
-    #else:
-        #own['lg_stance'] = 0
     lg_stance = own['lg_stance']
     own.actuators["grindoutair"].useLocalLinV = True        
     if own['grindjumpturn'] == True and own['grindCountdown'] > 12 and skippy == 0:           
         grindoutspeed = .1  
         grindoutspeed2 = 5.4  
         if lLR > turnsens:
-            #followcam.actuators["up"].dLoc = [ 0, 0, -camspeed2]
             if own['last_grindpos'] == 'reg_5050':
                 if STANCE == 0:
                     own.actuators["grindoutair"].linV = [0, grindoutspeed, 0]                    
                 else:
                     own.actuators["grindoutair"].linV = [0, -grindoutspeed, 0] 
                 cont.activate(own.actuators["grindoutair"]) 
-                #print("50grindoutair")   
 
         if lLR < -turnsens:
             if own['last_grindpos'] == 'reg_5050':
@@ -3130,7 +2406,6 @@ def grindoutair():
                 else: 
                     own.actuators["grindoutair"].linV = [0, grindoutspeed, 0] 
                 cont.activate(own.actuators["grindoutair"])
-                #print("50grindoutair")
         if lUD > turnsens:
             js = own['lg_stance']
             linvelx = own.getLinearVelocity(True)                
@@ -3138,40 +2413,26 @@ def grindoutair():
                 if js == 1:
                    own.actuators["grindoutair"].linV = [-grindoutspeed, 0, 0]
                    cont.activate(own.actuators["grindoutair"])
-                   #print("1grindoutair*", round(linvelx.x, 2), js)
                 else:
                     own.actuators["grindoutair"].linV = [grindoutspeed, 0, 0] 
                     cont.activate(own.actuators["grindoutair"]) 
-                    #print("2grindoutair*", round(linvelx.x, 2), js)   
-                #cont.activate(own.actuators["grindoutair"])                
         if lUD < -turnsens:  
             js = own['lg_stance']      
             if own['last_grindpos'] == 'reg_board':    
                 if js == 0:
                     own.actuators["grindoutair"].linV = [-grindoutspeed, 0, 0]
                     cont.activate(own.actuators["grindoutair"])
-                    #print("3grindoutair broke", js)
                 else:
                     own.actuators["grindoutair"].linV = [grindoutspeed, 0, 0]
                     cont.activate(own.actuators["grindoutair"])
-                    #print("equal")
-                    #print("4grindoutair broke", js)  
                 
     if LAST_GRIND == False and r_ground.triggered and own['grindjumpturn'] == True and own['grindCountdown'] < 1:
         own['grindjumpturn'] = False
-        #pass
     if r_ground.triggered:
         own['grind_jump'] = False 
-        #own['grindjumpturn'] = False   
-        #pass
     
     if own['grindjumpturn'] == False or own['grindCountdown'] < 19:
-        #pass
         cont.deactivate(own.actuators["grindoutair"])
-        #print("deactivate#################################")
-#    if own['grindjumpturn'] == True and r_ground.triggered:
-#        own['grindjumpturn'] = False
-                      
 
 def set_last_grindpos():
     if own['grindpos'] != None:
@@ -3183,36 +2444,17 @@ def air_pos():
     if rUD > .040 and r_ground.triggered == False and GRAB_ON == False and wr == None and jump_timer < 50:
         killact(2)
         killact(4)
-#        if trucks.isPlayingAction(500) == False:
-#            if STANCE == 0:
         if STANCE == 0:
             own['requestAction'] = 'reg_air_tail'    
-#                skater.playAction("reg_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
-#                deck.playAction("a_reg_manual", 10,70, layer=50, priority=8,  play_mode=1, speed=.5)
-#                trucks.playAction("a_reg_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
         else:
             own['requestAction'] = 'fak_air_tail' 
-#                skater.playAction("fak_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
-#                deck.playAction("a_fak_manual", 10,70, layer=50, priority=8,  play_mode=1, speed=.5)
-#                trucks.playAction("a_fak_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
     elif rUD < -.040 and r_ground.triggered == False and GRAB_ON == False and wr == None and jump_timer < 50:
         killact(2)
         killact(4)
-#        if trucks.isPlayingAction(500) == False:
         if STANCE == 0:
             own['requestAction'] = 'reg_air_nose' 
-#                skater.playAction("reg_nmanual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
-#                deck.playAction("a_fak_manual", 10,70, layer=50, priority=8,  play_mode=1, speed=.5)
-#                trucks.playAction("a_fak_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
         else:
             own['requestAction'] = 'fak_air_nose' 
-#                skater.playAction("fak_nmanual", 10,70, layer=50, priority=8, play_mode=1, speed=.5) 
-#                deck.playAction("a_reg_manual", 10,70, layer=50, priority=8,  play_mode=1, speed=.5)
-#                trucks.playAction("a_reg_manual", 10,70, layer=50, priority=8, play_mode=1, speed=.5)                                     
-    else:
-        killact(50)
-        #killact(50)
-        #killact(50)
 
 def air_turn_boost():
     pass
@@ -3226,22 +2468,14 @@ def revert():
     local = True
     rot = [ 0.0, 0.0, 3.14]
     own.applyRotation(rot,local)
-    #killall()
-    #if own['reg_manual'] == 1 or own['reg_nmanual'] == 1:
-    #if own['reg_manual'] == 1:
     if own['manual_v2_type'] == 'reg manual': 
         own['requestAction'] = 'reg_manual_revert_ccw'   
-#        skater.playAction("reg_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
-#        deck.playAction("a_reg_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
-#        trucks.playAction("a_reg_manual_revert_ccw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg")
-    #elif own['reg_nmanual'] == 1:
     elif own['manual_v2_type'] == 'reg nose manual':    
         skater.playAction("fak_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
         trucks.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg nose manual revert")             
-    #elif own['fak_manual'] == 1 or own['fak_nmanual'] == 1:
     elif own['manual_v2_type'] == 'fak manual':    
         skater.playAction("fak_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
@@ -3254,14 +2488,8 @@ def revert():
         print("fak")           
     else:
         own['requestAction'] = 'revert1'            
-#        skater.playAction("revert1", 1,10, layer=400, priority=8, play_mode=0, speed=.5)
-#        deck.playAction("a_revert1", 1,10, layer=400, priority=1, play_mode=0, speed=.5)
-#        trucks.playAction("a_revert1", 1,10, layer=400, priority=0, play_mode=0, speed=.5)
     own['revert_timer'] = 20 
     cont.activate(own.actuators["revertSound"])      
-    #revert_on_timer 20
-    #force = [0,0,0]
-    #own.setLinearVelocity(force, True)    
 def revert2():
     own["Q3oncdl"] = 0
     own["Q4oncdl"] = 0
@@ -3271,19 +2499,16 @@ def revert2():
     local = True
     rot = [ 0.0, 0.0, -3.14]
     own.applyRotation(rot,local)
-    #killall()
     if own['manual_v2_type'] == 'reg manual':    
         skater.playAction("reg_manual_revert_cw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_reg_manual_revert_cw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
         trucks.playAction("a_reg_manual_revert_cw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg")
-    #elif own['reg_nmanual'] == 1:
     elif own['manual_v2_type'] == 'reg nose manual':    
         skater.playAction("fak_manual_revert_cw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_cw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
         trucks.playAction("a_fak_manual_revert_cw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg nose manual revert")             
-    #elif own['fak_manual'] == 1 or own['fak_nmanual'] == 1:
     elif own['manual_v2_type'] == 'fak manual':    
         skater.playAction("fak_manual_revert_cw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_cw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
@@ -3296,9 +2521,6 @@ def revert2():
         print("fak")   
     else:     
         own['requestAction'] = 'revert2'       
-#        skater.playAction("revert2", 1,10, layer=400, priority=8, play_mode=0, speed=.5)
-#        deck.playAction("a_revert2", 1,10, layer=400, priority=1, play_mode=0, speed=.5)
-#        trucks.playAction("a_revert2", 1,10, layer=400, priority=0, play_mode=0, speed=.5)
     own['revert_timer'] = 20 
     cont.activate(own.actuators["revertSound"])         
 def revert3():
@@ -3311,19 +2533,16 @@ def revert3():
     rot = [ 0.0, 0.0, 3.14]
     own.applyRotation(rot,local) 
     print("real revert 3")  
-    #killall()
     if own['manual_v2_type'] == 'reg manual':    
         skater.playAction("reg_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_reg_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
         trucks.playAction("a_reg_manual_revert_ccw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg")
-    #elif own['reg_nmanual'] == 1:
     elif own['manual_v2_type'] == 'reg nose manual':    
         skater.playAction("fak_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
         trucks.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=0, play_mode=0, speed=4)
         print("reg nose manual revert")             
-    #elif own['fak_manual'] == 1 or own['fak_nmanual'] == 1:
     elif own['manual_v2_type'] == 'fak manual':    
         skater.playAction("fak_manual_revert_ccw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_fak_manual_revert_ccw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
@@ -3336,9 +2555,6 @@ def revert3():
         print("fak")   
     else:       
         own['requestAction'] = 'revert3' 
-#        skater.playAction("revert1", 1,10, layer=400, priority=8, play_mode=0, speed=.5)
-#        deck.playAction("a_revert1", 1,10, layer=400, priority=1, play_mode=0, speed=.5)
-#        trucks.playAction("a_revert1", 1,10, layer=400, priority=0, play_mode=0, speed=.5)
     own['revert_timer'] = 20 
     cont.activate(own.actuators["revertSound"])      
 def revert4():
@@ -3350,7 +2566,6 @@ def revert4():
     local = True
     rot = [ 0.0, 0.0, 3.14]
     own.applyRotation(rot,local)  
-    #killall()
     if own['manual_v2_type'] == 'reg manual':    
         skater.playAction("reg_manual_revert_cw", 70,10, layer=400, priority=8, play_mode=0, speed=4)
         deck.playAction("a_reg_manual_revert_cw", 70,10, layer=400, priority=1, play_mode=0, speed=4)
@@ -3376,9 +2591,6 @@ def revert4():
     else:
         own['requestAction'] = 'revert4'
         print("normal revert")        
-#        skater.playAction("revert2", 1,10, layer=400, priority=8, play_mode=0, speed=.5)
-#        deck.playAction("a_revert2", 1,10, layer=400, priority=1, play_mode=0, speed=.5)
-#        trucks.playAction("a_revert2", 1,10, layer=400, priority=0, play_mode=0, speed=.5)
     own['revert_timer'] = 20 
     cont.activate(own.actuators["revertSound"])       
 
@@ -3390,14 +2602,8 @@ def powerslide():
         own['powerslide_on'] = 1
         if STANCE == 0:
             own['powerslide'] = "reg2"
-            #skater.playAction("nreg_powerslide", 20,80, layer=400, priority=8, play_mode=1, speed=.5)
-            #deck.playAction("a_reg_powerslide", 20,80, layer=400, priority=1, play_mode=1, speed=.5)
-            #trucks.playAction("a_reg_powerslide", 20,80, layer=400, priority=0, play_mode=1, speed=.5)        
         if STANCE == 1:
             own['powerslide'] = "fak1" 
-            #skater.playAction("nfak_powerslide", 20,80, layer=400, priority=8, play_mode=1, speed=.5)
-            #deck.playAction("a_fak_powerslide_d", 20,80, layer=400, priority=1, play_mode=1, speed=.5)
-            #trucks.playAction("a_fak_powerslide_t", 20,80, layer=400, priority=0, play_mode=1, speed=.5)             
         linVelocity4 = own.getLinearVelocity(True)    
         if own['powerslide_counter'] > 15 and own['powerslide_counter'] < 18:         
             newx = linVelocity4.x * .9 
@@ -3413,14 +2619,8 @@ def powerslide2():
         own['powerslide_on'] = 1
         if STANCE == 0:
             own['powerslide'] = "reg1"
-            #skater.playAction("nreg_powerslide2", 20,80, layer=400, priority=8, play_mode=1, speed=.5)
-            #deck.playAction("a_reg_powerslide2_d", 20,80, layer=400, priority=1, play_mode=1, speed=.5)
-            #trucks.playAction("a_reg_powerslide2_t", 20,80, layer=400, priority=0, play_mode=1, speed=.5)        
         if STANCE == 1:
             own['powerslide'] = "fak2" 
-            #skater.playAction("nfak_powerslide2", 20,80, layer=400, priority=8, play_mode=1, speed=.5)
-            #deck.playAction("a_fak_powerslide2_d", 20,80, layer=400, priority=1, play_mode=1, speed=.5)
-            #trucks.playAction("a_fak_powerslide2_t", 20,80, layer=400, priority=0, play_mode=1, speed=.5)             
         linVelocity4 = own.getLinearVelocity(True)    
         if own['powerslide_counter'] > 15 and own['powerslide_counter'] < 18:         
             newx = linVelocity4.x * .9 
@@ -3440,66 +2640,12 @@ def powerslide_state():
             own['requestAction'] = 'reg_powerslide'
         if own['powerslide'] == "fak2":                               
             own['requestAction'] = 'fak_powerslide'                                    
-    #if own['powerslide_on'] == 1 and own['last_powerslide_on'] == 0:
-        #print("power_on")
-        #if own['powerslide'] == "reg2":
-            
-#            skater.playAction("nreg_powerslide", 0,20, layer=401, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_reg_powerslide", 0,20, layer=401, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_reg_powerslide", 0,20, layer=401, priority=0, play_mode=0, speed=1.5) 
-#        if own['powerslide'] == "fak1":
-#            own['requestAction'] = 'fak_powerslide'
-#            skater.playAction("nfak_powerslide", 0,20, layer=401, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_fak_powerslide_d", 0,20, layer=401, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_fak_powerslide_t", 0,20, layer=401, priority=0, play_mode=0, speed=1.5)
-            
-#        if own['powerslide'] == "reg1":
-#            #own['requestAction'] = 'reg_fs_powerslide'
-#            skater.playAction("nreg_powerslide2", 0,20, layer=401, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_reg_powerslide2_d", 0,20, layer=401, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_reg_powerslide2_t", 0,20, layer=401, priority=0, play_mode=0, speed=1.5) 
-#        if own['powerslide'] == "fak2":
-#            #own['requestAction'] = 'fak_fs_powerslide'
-#            skater.playAction("nfak_powerslide2", 0,20, layer=401, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_fak_powerslide2_d", 0,20, layer=401, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_fak_powerslide2_t", 0,20, layer=401, priority=0, play_mode=0, speed=1.5)            
-            
-####powerslide off#####                                 
-#    if own['powerslide_on'] == 0 and own['last_powerslide_on'] == 1:
-#        killact(400)
-#        killact(401)
-
-#        linVelocity4 = own.getLinearVelocity(True)    
-#        newx = linVelocity4.x * .9       
-#        force = [newx, linVelocity4.y, linVelocity4.z]
-#        own.setLinearVelocity(force, True) 
-#                
-#        if own['powerslide'] == "reg2":   
-#            skater.playAction("nreg_powerslide", 20,0, layer=4002, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_reg_powerslide", 20,0, layer=4002, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_reg_powerslide", 20,0, layer=4002, priority=0, play_mode=0, speed=1.5)
-#        if own['powerslide'] == "fak1":   
-#            skater.playAction("nfak_powerslide", 20,0, layer=4002, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_fak_powerslide_d", 20,0, layer=4002, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_fak_powerslide_t", 20,0, layer=4002, priority=0, play_mode=0, speed=1.5)     
-#            
-#        if own['powerslide'] == "reg1":   
-#            skater.playAction("nreg_powerslide2", 20,0, layer=4002, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_reg_powerslide2_d", 20,0, layer=4002, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_reg_powerslide2_t", 20,0, layer=4002, priority=0, play_mode=0, speed=1.5)
-#        if own['powerslide'] == "fak2":   
-#            skater.playAction("nfak_powerslide2", 20,0, layer=4002, priority=8, play_mode=0, speed=1.5)
-#            deck.playAction("a_fak_powerslide2_d", 20,0, layer=4002, priority=1, play_mode=0, speed=1.5)
-#            trucks.playAction("a_fak_powerslide2_t", 20,0, layer=4002, priority=0, play_mode=0, speed=1.5)                                
-#        #print("old power") 
 def powerslide_sound():
     sact = own.actuators["powerslide_sound"]
     if own['powerslide_on'] == 1:
         sact = own.actuators["powerslide_sound"]
         sact.volume = .2
         new_pitch = (abs(linVelocity.x) / 3)
-        #new_pitch = new_pitch * 1.1
-        #print("np=", new_pitch)
         if new_pitch < 1.1 and new_pitch > .5: 
             sact.pitch = new_pitch
         elif new_pitch <= .5:
@@ -3517,7 +2663,6 @@ def check_powerslide():
     except:
         pass 
     psxvel = abs(linVelocity.x)
-    #xvelsens = .1   
     if (lUD > .08 or lUD < -.08) and own['manual_v2'] == False and r_ground.triggered == True and psxvel > .1:
         if lUD > .08:
             powerslide()
@@ -3536,15 +2681,7 @@ def killmanuals():
         reg_nmanual_off()                
 
 def killopos():
-    if q5oncd < 1 and q1oncd <1:
-        killact(65)
-        killact(66)
-        killact(67)
-        killact(68)         
-        killact(71)
-        killact(72)
-        killact(73)
-        killact(74)     
+    pass    
                 
 stopAnims() 
 #nextframe()  
@@ -3799,14 +2936,6 @@ elif q5oncd > 0:
     killact(66)
     killact(67)
     killact(68) 
-    flipping = skater.isPlayingAction(fliplay)    
-#    if own["last_Opos"] == True and flipping == False:
-#        if STANCE == False:
-#            skater.playAction("noposin", 20,1, layer=69, priority=3, blendin=10, play_mode=0, speed=.5)
-#        elif STANCE == True:
-#            skater.playAction("fak_oposin", 20,1, layer=70, priority=3, blendin=10, play_mode=0, speed=.5)
-        #skater.stopAction(7)
-        #skater.stopAction(0)       
     own["last_Opos"] = False
 #q1    
 if rUD < -0.070:
@@ -3876,13 +3005,6 @@ elif q1oncd > 0:
     killact(74)
     killact(71)
     killact(72)
-    flipping = skater.isPlayingAction(fliplay)       
-#    if own["last_nOpos"] == True and flipping == False:
-
-#        if STANCE == 0 and r_ground.triggered:
-#            skater.playAction("nnoposin", 20,1, layer=75, priority=3, blendin=10, play_mode=0, speed=.5)
-#        elif STANCE == 1 and r_ground.triggered:
-#            skater.playAction("fak_noposin", 20,1, layer=76, priority=3, blendin=10, play_mode=0, speed=.5)
     own["last_nOpos"] = False   
        
 #q7
@@ -4251,12 +3373,6 @@ if bBut == 1:
 elif bBut ==0:
         own["lastStop"] = False
 ##### falls
-#space = own.sensors['space']
-#if space.triggered:
-#    own['fall'] = 1
-#else:
-#    own['fall'] = 0    
-
 if own['fall'] == 1:
     offboard()
     own['getoffboard'] = True
@@ -4275,7 +3391,6 @@ if own["GRAB_ON"] == True:
             skater.stopAction(fliplay)
 #frontside grab
 flipping = skater.isPlayingAction(fliplay) 
-#if rTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 0:
 if rTrig > 0.02 and r_ground.triggered == 0 and flipping == False:    
     GRAB_ON = True
     own["GRAB_ON"] = GRAB_ON
@@ -4297,22 +3412,6 @@ if rTrig > 0.02 and r_ground.triggered == 0 and flipping == False:
     #front_tail    
     elif STANCE == False and rUD > 0.07:
         frontside_tail_grab_on()                
-
-
-#if rTrig <= 0.02 and GRAB_ON == True and lTrig >= -.02:
-#    GRAB_ON = False
-#    own["GRAB_ON"] = GRAB_ON
-#    GRAB_PLAYED = False
-#    own["GRAB_PLAYED"] = GRAB_PLAYED
-if rTrig <= 0.02 and GRAB_ON == True:
-    killact(400)
-    killact(401)
-    #killact(403)
-    killact(404)
-    killact(408)
-    killact(409)
-    killact(410)
-    killact(2925)
 
 #backside grab
 #if lTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 0:
@@ -4343,42 +3442,14 @@ if lTrig <= 0.02 and GRAB_ON == True and lTrig >= -.02 and rTrig <= .02 and rTri
     own["GRAB_ON"] = GRAB_ON
     GRAB_PLAYED = False
     own["GRAB_PLAYED"] = GRAB_PLAYED
-if lTrig <= 0.02 or r_ground.triggered == 1:
-    killact(402)
-    killact(403)
-    killact(405)
-    killact(406)
-    killact(407)
-    killact(411)
-    killact(412)
-    #killact(404)
-#if lTrig <= 0.02 or r_ground.triggered == 1:
-#    killact(402)
-#    killact(403)
-#    #killact(405)
-#    #killact(406)
-#    killact(407)
-#    #killact(404)    
 
 #frontside pump #backside pump
 if (rTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1) or (lTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1):
     pump()
 else:
-    if own['lastPump'] == True:
-        #skater.stopAction(0) 
-        killact(20)
-        killact(21)
-        killact(22)
-        killact(23)
-#        if STANCE == 0:
-#            skater.playAction("nreg_pump_in", 20,1, layer=24, priority=8, blendin=10, play_mode=0, speed=1)
-#        elif STANCE == 1:
-#            skater.playAction("nfak_pump_in", 20,1, layer=25, priority=8, blendin=10, play_mode=0, speed=1)
     own["lastPump"] = False 
     own["Pump"] = False 
-    #print("stop pumping")
 def footplant():    
-    #a_reg_fp_rback
     framenum = own['framenum']
     last_ground_frame = own['lF_ground_frame']
     lF_air_frame = own['lF_air_frame']
@@ -4386,8 +3457,6 @@ def footplant():
     frames_since_grind = framenum - own['last_grind_frame']
     #print(frames_since_ground, "fsg")
     if LAST_GRIND == False and grindHit == True and aBut == True and frames_since_ground < 40 and touched:
-    #if LAST_GRIND == False and aBut == True and frames_since_ground < 10 and r_ground.triggered == 1:        
-    #if grindHit == True and aBut == True and frames_since_ground < 20:    
         own.setLinearVelocity([0,0,0],0)
         killall()
         if STANCE == 0:
@@ -4440,14 +3509,6 @@ def invert():
     if own["coping"] == 1 and invert_on == 1:
         killact(25)
         killact(24)
-#        if STANCE == False:             
-#            skater.playAction("reg_back_invert", 0,0, layer=300, play_mode=0, speed=.5) 
-#            deck.playAction("a_reg_back_invert", 0,0, layer=301, play_mode=0, speed=.5)
-#            trucks.playAction("a_reg_back_invert", 0,0, layer=302, play_mode=0, speed=.5)  
-#        if STANCE == True:             
-#            skater.playAction("fak_back_invert", 0,0, layer=300, play_mode=0, speed=.5) 
-#            deck.playAction("a_fak_back_invert", 0,0, layer=301, play_mode=0, speed=.5)
-#            trucks.playAction("a_fak_back_invert", 0,0, layer=302, play_mode=0, speed=.5)              
         if own['invert_on'] == 1 and own['last_invert'] == False:
             killall()
             cont.activate(own.actuators['invertOn_sound'])
@@ -4503,14 +3564,9 @@ def invert():
 invert() 
 footplant()
     
-#else:
-    #own['invert_on'] = 0 
   
 if own['invert_on'] == 0: 
     killact(900)
-    #killact(901)
-    #killact(902)       
-#print("l: ", lBump)
     
 def reset_pos():
     #reset
@@ -4554,18 +3610,8 @@ if stBut == True:
     own.actuators["sroll"].volume = .0001
     cont.deactivate(own.actuators["sroll"])
     own.actuators["sroll"].stopSound()
-
-#    print("Start")
-#    if own["gamepaused"] == False:
-#        cont.activate(own.actuators["pause"])    
-#        own["gamepaused"] == True
-#    if own["gamepaused"] == True:
-#        cont.activate(own.actuators["resume"])
-#        own["gamepaused"] == False
-
      
 def ylimit():
-    #if r_ground.triggered and touched == False and grindDar == 0:
     lgf = own['last_grind_frame']
     frame = own['framenum']
     frames_since_grinding = frame - lgf
@@ -4909,14 +3955,9 @@ def grind_turn():
                 if STANCE == True:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'fak right'                    
-                    #outact.dLoc = [0, -outloc, 0]
-                    #outact.dRot = [0, 0, -outrot]
                 if STANCE == False:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'reg right'                    
-                    #outact.dLoc = [0, outloc, 0]
-                    #outact.dRot = [0, 0, -outrot]                
-                #cont.activate(own.actuators["grindoutRight"])
                 own["grindoutturn"] = gotcd    
             if lq7on == 1 or lq8on:
                 if own['gt_cd2'] == 0:
@@ -4924,14 +3965,9 @@ def grind_turn():
                 if STANCE == True:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'fak left'                    
-                    #outact.dLoc = [0, outloc, 0]
-                    #outact.dRot = [0, 0, outrot]
                 if STANCE == False:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'reg left'                    
-                    #outact.dLoc = [0, -outloc, 0]
-                    #outact.dRot = [0, 0, outrot]                
-                #cont.activate(own.actuators["grindoutRight"])
                 own["grindoutturn"] = gotcd 
             if lq4on == 1:
                 if own['gt_cd2'] == 0:
@@ -4939,14 +3975,9 @@ def grind_turn():
                 if STANCE == True:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'fak fak right'
-                    #outact.dLoc = [0, -outloc, 0]
-                    #outact.dRot = [0, 0, outrot2]
                 if STANCE == False:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'reg fak right'
-                    #outact.dLoc = [0, outloc, 0]
-                    #outact.dRot = [0, 0, outrot2]
-                #cont.activate(own.actuators["grindoutRight"]) 
                 own["grindoutturn"] = gotcd
             if lq6on == 1:
                 if own['gt_cd2'] == 0:
@@ -4954,62 +3985,42 @@ def grind_turn():
                 if STANCE == True:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'fak fak left'
-                    #outact.dLoc = [0, outloc, 0]
-                    #outact.dRot = [0, 0, -outrot2]
                 if STANCE == False:
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'reg fak left'                      
-                    #outact.dLoc = [0, -outloc, 0]
-                    #outact.dRot = [0, 0, -outrot2]                
-                #cont.activate(own.actuators["grindoutRight"]) 
                 own["grindoutturn"] = gotcd                
         #use stance for 5050 and grindstance for boards                        
         if own['grindpos'] == 'reg_board':
             outvel = own.getLinearVelocity(1)
-            
-            
             outact.dLoc = [0, 0, 0]
             outact.dRot = [0, 0, 0]
             if lq5on == 1:
                 if own['gt_cd2'] == 0:
                     own['gt_cd2'] = 60                 
                 if own['grind_stance'] == True:
-                    #outact.dLoc = [-bsoutloc, 0, 0]
                     if own['footplant_on'] == True:
                         own.setLinearVelocity([(outvel.x + -bsoutvel), outvel.y, outvel.z], 1)
                         cont.activate(own.actuators["grindoutRight"])                   
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'bs fak back'                     
-                    #force = [-40, 0, 0]
-                    #own.applyForce(force,1)
                 if own['grind_stance'] == False:
-                    #outact.dLoc = [bsoutloc, 0, 0]
                     if own['footplant_on'] == True:
                         own.setLinearVelocity([(outvel.x + bsoutvel), outvel.y, outvel.z], 1)
                         cont.activate(own.actuators["grindoutRight"]) 
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'bs reg back'
-                    #force = [40, 0, 0]
-                    #own.applyForce(force,1)                    
-                #cont.activate(own.actuators["grindoutRight"]) 
                 own["grindoutturn"] = gotcd 
                 own['invert_on'] = 0  
             if lq1on == 1:
                 if own['gt_cd2'] == 0:
                     own['gt_cd2'] = 60                 
                 if own['grind_stance'] == True:
-                    #outact.dLoc = [bsoutloc, 0, 0]
-                    #force = [40, 0, 0]
-                    #own.applyForce(force,1) 
                     if own['footplant_on'] == True:                   
                         own.setLinearVelocity([(outvel.x + bsoutvel), outvel.y, outvel.z], 1)
                         cont.activate(own.actuators["grindoutRight"])
                     if own['grind_out_type'] == None:
                          own['grind_out_type'] = 'bs fak forward'                                            
                 if own['grind_stance'] == False:
-                    #outact.dLoc = [-bsoutloc, 0, 0]
-                    #force = [-40, 0, 0]
-                    #own.applyForce(force,1)
                     if own['footplant_on'] == True:                    
                         own.setLinearVelocity([(outvel.x + -bsoutvel), outvel.y, outvel.z], 1)
                         cont.activate(own.actuators["grindoutRight"])
@@ -5181,33 +4192,6 @@ def wallride():
         killact(3003)
         killact(3004)
         killact(3005)   
-#    if wallride_col.triggered == True:
-#        print("wallride")
-#        wallobj = wallride_col.hitObject
-#        print(wallobj)
-#        xyz = own.worldOrientation.to_euler()
-#        rotz = math.degrees(xyz[2])
-#        xyz2 = wallobj.worldOrientation.to_euler()
-#        rotz2 = math.degrees(xyz2[2])
-#        print("prot: ", rotz, "wrot: ", rotz2)
-#        try: 
-#            zvect = wallobj.getAxisVect( [0.0, 1.0, 0.0]) 
-#            print(zvect)
-#        except: pass
-#        rot = rotz - rotz2 
-#        rotation = rot * -1   
-#        rotation = [ 0.0, 0, rot]
-#        
-#        own.applyRotation( rotation, True)    
-        #vectTo = obj.getVectTo(wallobj)
-        
-#        try:
-#            if STANCE == 0:
-#                own.alignAxisToVect(zvect, 0, .9)
-#            if STANCE == 1:
-#                own.alignAxisToVect(-zvect, 0, .9) 
-#        except: pass                   
-#print(wallride_col.triggered)            
 
 def wallride_sound():
     
@@ -5236,23 +4220,9 @@ def shutoff_timers():
         own["Q8oncd"] = 0  
 def grindout_cleanup():             
     lgf = own['last_grind_frame']
-    if (frame - lgf) == 20:               
-        #print("kill grindout anims")
-        killact(200)
-        #killact(200)
-        #killact(200)
-    if skater.isPlayingAction(fliplay):    
-        #print("flipping")      
-        killact(700)
-        #killact(700)
-        #killact(700)
-        killact(200)
-        #killact(200)
-        #Ekillact(200)    
 def trans_jump():
     if own['jump_from_trans'] == 1:
         ground_ray = cont.sensors['ground_look']                        
-        #print('align transjump', own['trans_jump_obj'])
         jump_obj = own['trans_jump_obj']
         jump_obj = scene.objects[str(own['trans_jump_obj'])]
         #print(jump_obj)
@@ -5312,8 +4282,6 @@ grindout_cleanup()
 #printplaying()
 #transmult()
 linvelx = own.getLinearVelocity(True)
-#own["LAST_LEFT"] = LAST_LEFT
-#end
 #print(linvelx)
 own["linvelx"] = linvelx.x
 LAST_STANCE = STANCE
@@ -5357,31 +4325,8 @@ own['lastxBut_ground'] = xBut_ground
 own["last_sel"] = own["sel"]
 own["sel"] = bkBut  
 
-#linVelocity = own.getLinearVelocity(1)
-#print(linVelocity.z)
-#newz = linVelocity.z * .9
 if r_ground.triggered and own["jump_timer"] < 20:
     force2 = [0.0, 0, -10]
     own.applyForce(force2, True)
-    #own.linearVelocity = [ linVelocity.x, linVelocity.y, newz]
-#print(c_ground.triggered, r_ground.triggered, gray.hitPosition[2])
-#if c_ground.triggered and r_ground.triggered == False:
-#    print("AAAAAAAAAAAAAAlign")
-#print("og - new = ", vely)
-#print(r_ground.triggered)
-#spawn_pos = own['spawn_pos']
-#print(lUD)
-#.04 to .05
-#print("- ",spawn_pos.x, spawn_pos.y, spawn_pos.z)
-#printplaying()
-#print("-", udPad, ddPad)
-#print(own["stance"])
-#own["LAST_LEFT"] = LAST_LEFT
-#end
-#print(rLR)
-#print(r_ground.triggered)
-#print(own['hippy'], own['last_hippy'])
-
-#print("x: ", round(linvelx.x, 2), "y: ", round(linvelx.y, 2))
 
 
