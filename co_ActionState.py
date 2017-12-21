@@ -1092,9 +1092,13 @@ def main():
                 #in
                 if l_actionState != 'reg_nopos':
                     skater.playAction("nnoposin", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
                 #loop
                 else:
                     skater.playAction("nnopos", 1,40, layer=loop_layer, play_mode=1, speed=1)
+                    deck.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1) 
+                    trucks.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1)
             
             #fak_nopos
             if requestAction == 'fak_nopos':
@@ -1102,25 +1106,37 @@ def main():
                 #in
                 if l_actionState != 'fak_nopos':
                     skater.playAction("fak_noposin", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
                 #loop
                 else:
-                    skater.playAction("fak_nopos", 1,40, layer=loop_layer, play_mode=1, speed=1)                            
+                    skater.playAction("fak_nopos", 1,40, layer=loop_layer, play_mode=1, speed=1)
+                    deck.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1) 
+                    trucks.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1)                            
             
             #reg_pump
             if requestAction == 'reg_pump':
                 actionState = 'reg_pump'
                 if l_actionState != 'reg_pump':
-                    skater.playAction("nreg_pump_in", 1,20, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("nreg_pump_in", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("nreg_pump", 1,60, layer=loop_layer, play_mode=1, speed=.5)        
+                    skater.playAction("nreg_pump", 1,60, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 1,60, layer=loop_layer, play_mode=1, speed=1) 
+                    trucks.playAction("a_reg", 1,60, layer=loop_layer, play_mode=1, speed=1)        
 
             #fak_pump
             if requestAction == 'fak_pump':
                 actionState = 'fak_pump'
                 if l_actionState != 'fak_pump':
-                    skater.playAction("nfak_pump_in", 1,20, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("nfak_pump_in", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("nfak_pump.001", 1,60, layer=loop_layer, play_mode=1, speed=.5) 
+                    skater.playAction("nfak_pump.001", 1,60, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 1,60, layer=loop_layer, play_mode=1, speed=1) 
+                    trucks.playAction("a_reg", 1,60, layer=loop_layer, play_mode=1, speed=1) 
             #reg_manual
             if requestAction == 'reg_manual':
                 actionState = 'reg_manual'
