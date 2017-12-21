@@ -1707,7 +1707,7 @@ def push_goof():
 def brfoot():
     lay = grablay + 40
     if STANCE == 0:
-	skater.playAction("brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
+        skater.playAction("brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         deck.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
         trucks.playAction("a_brfoot", 1, 30, layer=lay, blendin=2, play_mode=0, speed=CAVEMAN_SPEED)
     if STANCE == 1:
@@ -2151,7 +2151,7 @@ def grind():
             elif own['grindType'] == "fak_nosegR": 
                 own['requestAction'] = 'fak_nosegr'               
             elif own['grindType'] == "fak_nosegL":
-                own['requestAction'] = 'reg_nosegl'                
+                own['requestAction'] = 'fak_nosegl'                
             elif own['grindType'] == "fak_tailg":
                 own['requestAction'] = 'fak_tailg' 
             elif own['grindType'] == "fak_tailgR": 
@@ -2221,6 +2221,7 @@ def grind():
             elif own['grindType'] == "fak_tailgL":
                 own['requestAction'] = 'fak_tailgl' 
             elif own['grindType'] == "reg_tailslide":
+                own['requestAction'] = 'reg_tailslide'
             elif own['grindType'] == "fak_tailslide":
                 own['grind_stance'] = 1
                 own['requestAction'] = 'fak_tailslide'
@@ -4329,4 +4330,7 @@ if r_ground.triggered and own["jump_timer"] < 20:
     force2 = [0.0, 0, -10]
     own.applyForce(force2, True)
 
+if grindDar == False:
+    own['grindType'] = ''
 
+#print(own['grindType'])
