@@ -954,9 +954,13 @@ def main():
                         #deck.stopAction(trans_layer)
                         #trucks.stopAction(trans_layer)
                         skater.playAction("nfak_pump_in", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                         #print(cur_frame)
                     else:    
                         skater.playAction("nfak_pump_in", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
                 if l_actionState == 'fak_opos':
                     trans_playing = skater.isPlayingAction(trans_layer)
                     if trans_playing:
@@ -1202,54 +1206,86 @@ def main():
             if requestAction == 'frontside_grab':
                 actionState = 'frontside_grab'
                 if l_actionState != 'frontside_grab':
-                    skater.playAction("reg_fg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("reg_fg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
                     skater.playAction("reg_fg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             if requestAction == 'backside_grab':
                 actionState = 'backside_grab'
                 if l_actionState != 'backside_grab':
-                    skater.playAction("reg_bsg2", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("reg_bsg2", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
                     skater.playAction("reg_bsg2", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
                     
                     
                     
             if requestAction == 'fak_frontside_grab':
                 actionState = 'fak_frontside_grab'
                 if l_actionState != 'fak_frontside_grab':
-                    skater.playAction("fak_fg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_fg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
                     skater.playAction("fak_fg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             if requestAction == 'fak_backside_grab':
                 actionState = 'fak_backside_grab'
                 if l_actionState != 'fak_backside_grab':
-                    skater.playAction("fak_bg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_bg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("fak_bg", 10,30, layer=loop_layer, play_mode=1, speed=.5)                                                                                                     
+                    skater.playAction("fak_bg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)                                                                                                     
             if requestAction == 'frontside_nose_grab':
                 actionState = 'frontside_nose_grab'
                 if l_actionState != 'frontside_nose_grab':
-                    skater.playAction("frontside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("frontside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("frontside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
+                    skater.playAction("frontside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
             if requestAction == 'backside_nose_grab':
                 actionState = 'backside_nose_grab'
                 if l_actionState != 'backside_nose_grab':
-                    skater.playAction("backside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("backside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1) 
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)   
                 else:
-                    skater.playAction("backside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
+                    skater.playAction("backside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
             if requestAction == 'fak_frontside_nose_grab':
                 actionState = 'fak_frontside_nose_grab'
                 if l_actionState != 'fak_frontside_nose_grab':
-                    skater.playAction("fak_frontside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_frontside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("fak_frontside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
+                    skater.playAction("fak_frontside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
             if requestAction == 'fak_backside_nose_grab':
                 actionState = 'fak_backside_nose_grab'
                 if l_actionState != 'fak_backside_nose_grab':
-                    skater.playAction("fak_backside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_backside_nose_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("fak_backside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)  
+                    skater.playAction("fak_backside_nose_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)  
 
 
 
@@ -1260,27 +1296,43 @@ def main():
             if requestAction == 'frontside_tail_grab':
                 actionState = 'frontside_tail_grab'
                 if l_actionState != 'frontside_tail_grab':
-                    skater.playAction("frontside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("frontside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("frontside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
+                    skater.playAction("frontside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
             if requestAction == 'backside_tail_grab':
                 actionState = 'backside_tail_grab'
                 if l_actionState != 'backside_tail_grab':
-                    skater.playAction("backside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("backside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
                     skater.playAction("backside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             if requestAction == 'fak_frontside_tail_grab':
                 actionState = 'fak_frontside_tail_grab'
                 if l_actionState != 'fak_frontside_tail_grab':
-                    skater.playAction("fak_frontside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_frontside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("fak_frontside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
+                    skater.playAction("fak_frontside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)   
             if requestAction == 'fak_backside_tail_grab':
                 actionState = 'fak_backside_tail_grab'
                 if l_actionState != 'fak_backside_tail_grab':
-                    skater.playAction("fak_backside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)    
+                    skater.playAction("fak_backside_tail_grab", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=1)    
                 else:
-                    skater.playAction("fak_backside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
+                    skater.playAction("fak_backside_tail_grab", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
                     
             if requestAction == 'reg_noseg':
                 actionState = 'reg_noseg'
