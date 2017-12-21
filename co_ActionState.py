@@ -833,18 +833,26 @@ def main():
                         #cur_frame -= 2                    
                     if trans_playing and cur_frame > 1:
                         skater.playAction("nreg_pump_in", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                         #print(cur_frame)
                     else:    
                         skater.playAction("nreg_pump_in", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
                 if l_actionState == 'reg_opos':
                     trans_playing = skater.isPlayingAction(trans_layer)
                     if trans_playing:
                         cur_frame = skater.getActionFrame(trans_layer)
                     if trans_playing and cur_frame > 1:
                         skater.playAction("noposin", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                     else:   
                         own['actionTimer'] = 20 
-                        skater.playAction("noposin", 20,1, layer=trans_layer, play_mode=0, speed=1) 
+                        skater.playAction("noposin", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1) 
                 if l_requestAction == 'reg_nopos':
                     flipping = skater.isPlayingAction(flip_layer)
                     if flipping == 0:
@@ -857,10 +865,14 @@ def main():
                             #deck.stopAction(trans_layer)
                             #trucks.stopAction(trans_layer)
                             skater.playAction("nnoposin", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                            deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                            trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                             #print(cur_frame)
                         else: 
                             own['actionTimer'] = 20   
                             skater.playAction("nnoposin", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                            deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                            trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
                 
                 if l_requestAction == 'reg_manual':
                     trans_playing = skater.isPlayingAction(trans_layer)
@@ -899,12 +911,14 @@ def main():
                     if trans_playing and cur_frame > 1:                
                         skater.playAction("nreg_left", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                         deck.playAction("a_reg_left", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5) 
                     else:
                         own['actionTimer'] = 20
                         requestAction = 'reg_turnLeft_out'
                         actionState = 'reg_turnLeft_out'
                         skater.playAction("nreg_left", 10,1, layer=trans_layer, play_mode=0, speed=.5)
-                        deck.playAction("a_reg_left", 10,1, layer=trans_layer, play_mode=0, speed=.5) 
+                        deck.playAction("a_reg_left", 10,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", 10,1, layer=trans_layer, play_mode=0, speed=.5) 
                 if l_actionState == 'reg_Right':
                     #requestAction = 'reg_turnRight_out'
                     trans_playing = skater.isPlayingAction(trans_layer)
@@ -914,10 +928,12 @@ def main():
                     if trans_playing and cur_frame > 1:                
                         skater.playAction("nreg_right", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                         deck.playAction("a_reg_right", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5) 
                     else:
                         own['actionTimer'] = 20
                         skater.playAction("nreg_right", 10,1, layer=trans_layer, play_mode=0, speed=.5)
                         deck.playAction("a_reg_right", 10,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", 10,1, layer=trans_layer, play_mode=0, speed=.5) 
                 if requestAction == 'reg_roll':
                     actionState = 'reg_roll' 
                     skater.playAction("nreg", 1,60, layer=loop_layer, play_mode=1, speed=.5)
@@ -951,10 +967,14 @@ def main():
                         #deck.stopAction(trans_layer)
                         #trucks.stopAction(trans_layer)
                         skater.playAction("fak_oposin", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                         #print(cur_frame)
                     else:
                         own['actionTimer'] = 20    
                         skater.playAction("fak_oposin", 20,1, layer=trans_layer, play_mode=0, speed=1) 
+                        deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
                 if l_requestAction == 'fak_nopos':
                     trans_playing = skater.isPlayingAction(trans_layer)
                     if trans_playing:
@@ -965,10 +985,14 @@ def main():
                         #deck.stopAction(trans_layer)
                         #trucks.stopAction(trans_layer)
                         skater.playAction("fak_noposin", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=1)
                         #print(cur_frame)
                     else:    
                         own['actionTimer'] = 20
-                        skater.playAction("fak_noposin", 20,1, layer=trans_layer, play_mode=0, speed=1) 
+                        skater.playAction("fak_noposin", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        deck.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=1) 
                 if l_requestAction == 'fak_manual':
                     trans_playing = skater.isPlayingAction(trans_layer)
                     if trans_playing:
@@ -1008,9 +1032,11 @@ def main():
                     if trans_playing and cur_frame > 1:                
                         skater.playAction("nfak_left", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                         deck.playAction("a_fak_left", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                     else:
                         skater.playAction("nfak_left", 10,1, layer=trans_layer, play_mode=0, speed=.5)
-                        deck.playAction("a_fak_left", 10,1, layer=trans_layer, play_mode=0, speed=.5) 
+                        deck.playAction("a_fak_left", 10,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", 20,1, layer=trans_layer, play_mode=0, speed=.5) 
                 if l_requestAction == 'fak_turnRight':
                     trans_playing = skater.isPlayingAction(trans_layer)
                     if trans_playing:
@@ -1019,9 +1045,11 @@ def main():
                     if trans_playing and cur_frame > 1:                
                         skater.playAction("nfak_right", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                         deck.playAction("a_fak_right", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", cur_frame,1, layer=trans_layer, play_mode=0, speed=.5)
                     else:
                         skater.playAction("nfak_right", 10,1, layer=trans_layer, play_mode=0, speed=.5)
-                        deck.playAction("a_fak_right", 10,1, layer=trans_layer, play_mode=0, speed=.5)                                 
+                        deck.playAction("a_fak_right", 10,1, layer=trans_layer, play_mode=0, speed=.5)
+                        trucks.playAction("a_reg", 10,1, layer=trans_layer, play_mode=0, speed=.5)                                 
                 
                 if requestAction == 'fak_roll':
                     actionState = 'fak_roll' 
@@ -1035,10 +1063,14 @@ def main():
                 #in
                 if l_actionState != 'reg_opos':
                     skater.playAction("noposin", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
                 #loop
                 else:
                   
                     skater.playAction("nopos", 1,40, layer=loop_layer, play_mode=1, speed=1)
+                    deck.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1)
+                    trucks.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1)
             
             #fak_opos
             if requestAction == 'fak_opos':
@@ -1046,9 +1078,13 @@ def main():
                 #in
                 if l_actionState != 'fak_opos':
                     skater.playAction("fak_oposin", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    deck.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
+                    trucks.playAction("a_reg", 1,20, layer=trans_layer, play_mode=0, speed=1)
                 #loop
                 else:
                     skater.playAction("fak_opos", 1,40, layer=loop_layer, play_mode=1, speed=1) 
+                    deck.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1) 
+                    trucks.playAction("a_reg", 1,40, layer=loop_layer, play_mode=1, speed=1) 
             
             #reg_nopos
             if requestAction == 'reg_nopos':
