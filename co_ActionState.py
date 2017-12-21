@@ -731,10 +731,12 @@ def main():
                 if l_actionState != 'reg_turnLeft':
                     skater.playAction("nreg_left", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                     deck.playAction("a_reg_left", 1,10, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                 #loop
                 else:
                     skater.playAction("nreg_left", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
                     deck.playAction("a_reg_left", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             #reg_turnRight        
             if requestAction == 'reg_turnRight':
                 actionState = 'reg_turnRight'
@@ -742,10 +744,12 @@ def main():
                 if l_actionState != 'reg_turnRight':
                     skater.playAction("nreg_right", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                     deck.playAction("a_reg_right", 1,10, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                 #loop
                 else:
                     skater.playAction("nreg_right", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
                     deck.playAction("a_reg_right", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             if requestAction == 'reg_turnRight_out':
                 pass        
             #fak_turnLeft
@@ -755,10 +759,12 @@ def main():
                 if l_actionState != 'fak_turnLeft':
                     skater.playAction("nfak_left", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                     deck.playAction("a_fak_left", 1,10, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                 #loop
                 else:
                     skater.playAction("nfak_left", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
                     deck.playAction("a_fak_left", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5)
             #fak_turnRight        
             if requestAction == 'fak_turnRight':
                 actionState = 'fak_turnRight'
@@ -766,10 +772,12 @@ def main():
                 if l_actionState != 'fak_turnRight':
                     skater.playAction("nfak_right", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                     deck.playAction("a_fak_right", 1,10, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,10, layer=trans_layer, play_mode=0, speed=.5)
                 #loop
                 else:
                     skater.playAction("nfak_right", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
-                    deck.playAction("a_fak_right", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
+                    deck.playAction("a_fak_right", 10,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 10,30, layer=loop_layer, play_mode=1, speed=.5) 
             #reg_fs_powerslide
             if requestAction == 'reg_fs_powerslide':
                 actionState = 'reg_fs_powerslide'
