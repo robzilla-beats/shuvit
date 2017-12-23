@@ -1655,7 +1655,27 @@ def main():
                     skater.playAction("fak_tailg", 30,1, layer=loop_layer, play_mode=1, speed=.5)
                     deck.playAction("a_fak_tailg", 30,1, layer=loop_layer, play_mode=1, speed=.5)
                     trucks.playAction("a_fak_tailg", 30,1, layer=loop_layer, play_mode=1, speed=.5)                     
-                    
+            
+            if requestAction == 'reg_stop':
+                actionState = 'reg_stop'
+                if l_actionState != 'reg_stop'
+                    skater.playAction("reg_stop", 1,30, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg", 1,30, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,30, layer=trans_layer, play_mode=0, speed=.5)        
+                else:
+                    skater.playAction("reg_stop", 30,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 30,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 30,30, layer=loop_layer, play_mode=1, speed=.5)
+            if requestAction == 'fak_stop':
+                actionState = 'fak_stop'
+                if l_actionState != 'fak_stop'
+                    skater.playAction("fak_stop", 1,30, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg", 1,30, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg", 1,30, layer=trans_layer, play_mode=0, speed=.5)        
+                else:
+                    skater.playAction("fak_stop", 30,30, layer=loop_layer, play_mode=1, speed=.5)
+                    deck.playAction("a_reg", 30,30, layer=loop_layer, play_mode=1, speed=.5)
+                    trucks.playAction("a_reg", 30,30, layer=loop_layer, play_mode=1, speed=.5)                        
                                          
     #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     #walk anims            

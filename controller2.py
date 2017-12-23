@@ -1023,30 +1023,17 @@ def stop():
         can_stop = 0    
     if r_ground.triggered == 1 and STANCE == False and can_stop == 1:
         own['requestAction'] = 'reg_stop'        
-        #skater.playAction("reg_stop", 1,30, layer=18, priority=59, blendin=10, play_mode=1, speed=.5)
         yvel = linVelocity.x * .985
         force = [(yvel), 0, linVelocity.z]
         own.setLinearVelocity(force, True)
-        #if lastStop == False:
-            #skater.playAction("reg_stopin", 1,15, layer=61, priority=3, blendin=10, play_mode=0, speed=.5)
     elif r_ground.triggered == 1 and STANCE == True and can_stop == 1:
         own['requestAction'] = 'fak_stop'
-        #skater.playAction("fak_stop", 1,30, layer=19, priority=7, blendin=10, play_mode=1, speed=.5)
         yvel = linVelocity.x * .985
         force = [(yvel), 0, linVelocity.z]
-        own.setLinearVelocity(force, True)
-        #if lastStop == False:
-            #skater.playAction("fak_stopin", 1,15, layer=62, priority=3, blendin=10, play_mode=0, speed=.5)
-    
+        own.setLinearVelocity(force, True)    
     
     if linVelocity.x < .05 and linVelocity.x > -.05 and own["lastStop"] == True:
-        own["lastStop"] == False   
-        #skater.stopAction(7)
-        #skater.stopAction(1) 
-        #if STANCE == True:
-            #skater.playAction("fak_stopin", 15,1, layer=63, priority=3, blendin=10, play_mode=0, speed=.5)
-        #elif STANCE == False:
-            #skater.playAction("reg_stopin", 15,1, layer=64, priority=3, blendin=10, play_mode=0, speed=.5)    
+        own["lastStop"] == False       
 
 def oposin():
     if skater.isPlayingAction(30) or skater.isPlayingAction(31):

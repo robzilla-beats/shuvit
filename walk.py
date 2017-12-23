@@ -810,10 +810,7 @@ def idle_anim():
                         deck.playAction("a_fak_idle6", 1,120, layer=3, play_mode=0, speed=.5)
                         trucks.playAction("a_fak_idle6", 1,120, layer=3, play_mode=0, speed=.5) 
                     elif STANCE == 1 and own['throw_deck'] == 1:
-                        skater.playAction("fak_idle6", 1,120, layer=3, play_mode=0, speed=.5)                                                                                                                 
-        #deck.playAction("a_reg_idle1", 1,120, layer=3, play_mode=1)
-        #trucks.playAction("a_reg_idle1", 1,120, layer=3, play_mode=1) 
-                
+                        skater.playAction("fak_idle6", 1,120, layer=3, play_mode=0, speed=.5)                                                                                                                                 
 
 def reset_pos():
     #reset
