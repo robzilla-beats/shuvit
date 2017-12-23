@@ -969,8 +969,6 @@ def jump():
 
 def jump_Timer():
     jump_timer = own['jump_timer']
-    if jump_timer == 1:
-        pass
     if jump_timer > 0:
         jump_timer = jump_timer - 1
         own['jump_timer'] = jump_timer 
@@ -1017,10 +1015,10 @@ def roll():
         pass      
 def stop():
     if linVelocity.x < .05 and linVelocity.x > -.05:
-        can_stop = 1
+        can_stop = 0
         own["lastStop"] = True
     else:
-        can_stop = 0    
+        can_stop = 1    
     if r_ground.triggered == 1 and STANCE == False and can_stop == 1:
         own['requestAction'] = 'reg_stop'        
         yvel = linVelocity.x * .985
@@ -2093,6 +2091,9 @@ def grind():
     STANCE = own["stance"]
     jumpstance = own["jump_stance"]
     lif = frame - own['last_invert_frame']
+    if own['LAST_GRIND'] == False and grindHit == True:
+        own['grindstartFrame'] = own['framenum']
+    print(own['grindstartFrame'])    
     if grindHit == True and own['invert_on'] == 0 and own['footplant_on'] == False and own['manual'] == 0 and lif > 40 and own['dropinTimer'] < 30:  
         gblend = 1    
         if LAST_GRIND == 0:
@@ -2869,7 +2870,14 @@ if rUD > .070:
         q5on = 1
         q5oncd = countdown
         own["Q5oncd"] = q5oncd
-    oposin()   
+    oposin()  
+    
+if (rTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1) or (lTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1):
+    pump()
+else:
+    own["lastPump"] = False 
+    own["Pump"] = False     
+     
 if rUD > .02:    
     grindpos = own['grindpos']   
     jumpstance = own["jump_stance"]
@@ -3424,11 +3432,7 @@ if lTrig <= 0.02 and GRAB_ON == True and lTrig >= -.02 and rTrig <= .02 and rTri
     own["GRAB_PLAYED"] = GRAB_PLAYED
 
 #frontside pump #backside pump
-if (rTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1) or (lTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1):
-    pump()
-else:
-    own["lastPump"] = False 
-    own["Pump"] = False 
+
 def footplant():    
     framenum = own['framenum']
     last_ground_frame = own['lF_ground_frame']
@@ -3914,13 +3918,14 @@ def grind_turn():
     jumping = None
     gotcd = 25
     force = [0,0,0]
-    grindHit = own['grindTouch']       
+    grindHit = own['grindTouch']      
+    sincegrinding = own['framenum']  - own['grindstartFrame']
     if rUD > turnsens or rLR > turnsens or rUD < -turnsens or rLR < -turnsens:
        jumping = True
     if grindHit == False:
         cont.deactivate(own.actuators['grindoutRight'])
         cont.deactivate(own.actuators['grindoutLeft'])   
-    if grindHit == True and jumping == None:
+    if grindHit == True and jumping == None and sincegrinding > 20:
         outloc = 0.022
         bsoutloc = .07
         bsoutvel = .1
