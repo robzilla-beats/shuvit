@@ -822,8 +822,12 @@ def reset_pos():
         spawn_pos = own['spawn_pos']
         spawn_rot = own['spawn_rot']
         spawnz = spawn_pos[2] + .1
-        own.worldPosition = (spawn_pos[0], spawn_pos[1], spawnz)
-        own.worldOrientation = [[spawn_rot[0][0],spawn_rot[0][1],spawn_rot[0][2]], [spawn_rot[1][0],spawn_rot[1][1],spawn_rot[1][2]], [0.0, 0.0, 1.0]]
+        try:
+            own.worldPosition = (spawn_pos[0], spawn_pos[1], spawnz)
+            own.worldOrientation = [[spawn_rot[0][0],spawn_rot[0][1],spawn_rot[0][2]], [spawn_rot[1][0],spawn_rot[1][1],spawn_rot[1][2]], [0.0, 0.0, 1.0]]
+        except:    
+            own.worldPosition = (0, 0, .1)
+            own.worldOrientation = [[1.0, 0.0, 0.0], [ 0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]    
         if own["spawn_stance"] == 1:
             own.setLinearVelocity([.1,0,0], 1)
             #cam.worldPosition = (spawn_pos[0], spawn_pos[1], (spawn_pos[2] + .25))
