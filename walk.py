@@ -818,7 +818,7 @@ def reset_pos():
         
         spawn_pos = own['spawn_pos']
         spawn_rot = own['spawn_rot']
-        spawnz = spawn_pos[2] + .1
+        #spawnz = spawn_pos[2] + .1
         try:
             own.worldPosition = (spawn_pos[0], spawn_pos[1], spawnz)
             own.worldOrientation = [[spawn_rot[0][0],spawn_rot[0][1],spawn_rot[0][2]], [spawn_rot[1][0],spawn_rot[1][1],spawn_rot[1][2]], [0.0, 0.0, 1.0]]
