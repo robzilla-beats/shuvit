@@ -15,7 +15,7 @@ def main():
    
     #set possible requestActions
     requestActions_list = ['reg_roll', 'fak_roll', 'reg_turnLeft', 'reg_turnLeft_out', 'reg_turnRight', 'reg_turnRight_out', 'fak_turnLeft', 'fak_turnRight', 'reg_pump', 'fak_pump', 'reg_land', 'fak_land', 'reg_idle', 'reg_idle_nb', 'fak_idle', 'fak_idle_nb', 'reg_walk', 'reg_walk_nb', 'reg_walkFast', 'reg_walkFast_nb', 'fak_walk', 'fak_walk_nb', 'fak_walkFast', 'fak_walkFast_nb', 'reg_pump', 'fak_pump', 'reg_opos', 'fak_opos', 'reg_nopos', 'fak_nopos', 'reg_manual', 'fak_manual', 'reg_nmanual', 'fak_nmanual', 'reg_air', 'fak_air', 'frontside_grab', 'backside_grab', 'fak_backside_grab', 'fak_frontside_grab', 'frontside_nose_grab', 'frontside_tail_grab', 'backside_nose_grab', 'backside_tail_grab', 'fak_frontside_nose_grab', 'fak_frontside_tail_grab', 'fak_backside_nose_grab', 'fak_backside_tail_grab', 'reg_noseg', 'reg_air_nose', 'fak_air_nose', 'reg_air_tail', 'fak_air_tail', 'reg_nosegr','reg_nosegl',  'fak_noseg','fak_nosegr', 'fak_nosegl', 'reg_nosegl', 'fak_tailg', 'fak_tailgr', 'fak_tailgl', 'reg_tailg', 'reg_tailgr', 'reg_tailgl', 'reg_tailslide', 'fak_tailslide', 'reg_noseslide', 'fak_noseslide', 'nose_stall','tail_stall', 'reg_5050', 'fak_5050', 'reg_tailg', 'reg_bsboard', 'fak_bsboard', 'reg_fsboard', 'reg_powerslide', 'fak_powerslide', 'reg_fs_powerslide', 'fak_fs_powerslide', 'reg_stop', 'fak_stop']
-    oneshotActions_list = ['reg_jump', 'fak_jump', 'reg_onboard', 'fak_onboard', 'reg_dropin', 'fak_dropin', 'reg_land', 'fak_land', 'reg_push', 'fak_push', 'reg_push_goof', 'fak_push_goof', 'reg_manual_revert_ccw', 'revert1', 'revert2', 'revert3', 'revert4', 'reg_ollie', 'reg_nollie', 'reg_nollie', 'fak_ollie', 'fak_nollie', 'reg_kickflip', 'fak_kickflip', 'reg_varial_kickflip', 'fak_varial_kickflip', 'reg_nollie_varial_kickflip', 'fak_nollie_varial_kickflip', 'reg_nollie_varial_heelflip', 'fak_nollie_varial_heelflip', 'reg_varial_heelflip', 'fak_varial_heelflip', 'reg_nollie_kickflip', 'fak_nollie_kickflip', 'reg_heelflip', 'fak_heelflip', 'reg_nollie_heelflip', 'fak_nollie_heelflip', 'reg_shovit', 'fak_shovit', 'reg_shovit360', 'fak_shovit360', 'reg_fsshovit360', 'fak_fsshovit360', 'reg_nollie_shovit', 'fak_nollie_shovit', 'reg_fsshovit', 'fak_fsshovit',  'reg_nollie_fsshovit', 'fak_nollie_fsshovit', 'reg_nollie_shovit360', 'fak_nollie_shovit360', 'reg_nollie_fsshovit', 'fak_nollie_fsshovit', 'reg_turnRight_out', 'reg_turnLeft_out', 'fak_turnRight_out', 'fak_turnLeft_out', 'reg_opos_out', 'fak_opos_out', 'reg_nopos_out', 'fak_nopos_out', 'reg_pump_out', 'fak_pump_out', 'reg_powerslide_out', 'fak_powerslide_out', 'reg_fs_powerslide_out', 'fak_fs_powerslide_out', 'reg_stop_out', 'fak_stop_out']
+    oneshotActions_list = ['reg_jump', 'fak_jump', 'reg_onboard', 'fak_onboard', 'reg_dropin', 'fak_dropin', 'reg_land', 'fak_land', 'reg_push', 'fak_push', 'reg_push_goof', 'fak_push_goof', 'reg_manual_revert_ccw', 'revert1', 'revert2', 'revert3', 'revert4', 'reg_ollie', 'reg_nollie', 'reg_nollie', 'fak_ollie', 'fak_nollie', 'reg_kickflip', 'fak_kickflip', 'reg_varial_kickflip', 'fak_varial_kickflip', 'reg_nollie_varial_kickflip', 'fak_nollie_varial_kickflip', 'reg_nollie_varial_heelflip', 'fak_nollie_varial_heelflip', 'reg_varial_heelflip', 'fak_varial_heelflip', 'reg_nollie_kickflip', 'fak_nollie_kickflip', 'reg_heelflip', 'fak_heelflip', 'reg_nollie_heelflip', 'fak_nollie_heelflip', 'reg_shovit', 'fak_shovit', 'reg_shovit360', 'fak_shovit360', 'reg_fsshovit360', 'fak_fsshovit360', 'reg_nollie_shovit', 'fak_nollie_shovit', 'reg_fsshovit', 'fak_fsshovit',  'reg_nollie_fsshovit', 'fak_nollie_fsshovit', 'reg_nollie_shovit360', 'fak_nollie_shovit360', 'reg_nollie_fsshovit', 'fak_nollie_fsshovit', 'reg_turnRight_out', 'reg_turnLeft_out', 'fak_turnRight_out', 'fak_turnLeft_out', 'reg_opos_out', 'fak_opos_out', 'reg_nopos_out', 'fak_nopos_out', 'reg_pump_out', 'fak_pump_out', 'reg_powerslide_out', 'fak_powerslide_out', 'reg_fs_powerslide_out', 'fak_fs_powerslide_out', 'reg_stop_out', 'fak_stop_out', 'reg_noseslide_out', 'fak_noseslide_out', 'reg_tailslide_out', 'fak_tailslide_out']
 
     jump_overrideList = ['reg_ollie', 'reg_nollie', 'reg_nollie', 'fak_ollie', 'fak_nollie', 'reg_kickflip', 'fak_kickflip', 'reg_varial_kickflip', 'fak_varial_kickflip', 'reg_nollie_varial_kickflip', 'fak_nollie_varial_kickflip', 'reg_nollie_varial_heelflip', 'fak_nollie_varial_heelflip', 'reg_varial_heelflip', 'fak_varial_heelflip', 'reg_nollie_kickflip', 'fak_nollie_kickflip', 'reg_heelflip', 'fak_heelflip', 'reg_nollie_heelflip', 'fak_nollie_heelflip', 'reg_shovit', 'fak_shovit', 'reg_shovit360', 'fak_shovit360', 'reg_fsshovit360', 'fak_fsshovit360', 'reg_nollie_shovit', 'fak_nollie_shovit', 'reg_fsshovit', 'fak_fsshovit',  'reg_nollie_fsshovit', 'fak_nollie_fsshovit', 'reg_nollie_shovit360', 'fak_nollie_shovit360', 'reg_nollie_fsshovit', 'fak_nollie_fsshovit']
     
@@ -51,7 +51,9 @@ def main():
         #own['actionTimer'] = 0
     if own['actionTimer'] != 0 and transPlaying == False and isplaying == False:
         own['actionTimer'] = 0
-        actionTimer = 0            
+        actionTimer = 0
+        print('reset actionTimer')
+        #pass            
         
     #land action over ride
     if (requestAction == 'reg_land' or requestAction == 'fak_land') and own['grindHit'] == True:
@@ -84,6 +86,10 @@ def main():
             skater.stopAction(trans_layer)
             trucks.stopAction(trans_layer)
             deck.stopAction(trans_layer)                 
+
+    #dirty tailslide fix
+#    if l_requestAction == 'reg_tailslide' and (requestAction == 'reg_5050' or requestAction == 'reg_roll' or requestAction == 'reg_opos'):
+#        requestAction = 'reg_tailslide'
             
     #check last actionState to see if an out action is needed
     
@@ -137,7 +143,19 @@ def main():
             actionState = 'reg_stop_out' 
         if l_actionState == 'fak_stop' and requestAction != 'fak_stop':
             requestAction = 'fak_stop_out'
-            actionState = 'fak_stop_out'                                                                   
+            actionState = 'fak_stop_out' 
+        if l_actionState == 'reg_noseslide' and requestAction != 'reg_noseslide':
+            requestAction = 'reg_noseslide_out'
+            actionState = 'reg_noseslide_out'
+        if l_actionState == 'fak_noseslide' and requestAction != 'fak_noseslide':
+            requestAction = 'fak_noseslide_out'
+            actionState = 'fak_noseslide_out'
+        if l_actionState == 'reg_tailslide' and requestAction != 'reg_tailslide':
+            requestAction = 'reg_tailslide_out'
+            actionState = 'reg_tailslide_out'                                                
+        if l_actionState == 'fak_tailslide' and requestAction != 'fak_tailslide':
+            requestAction = 'fak_tailslide_out'
+            actionState = 'fak_tailslide_out'                                              
     else:
         print("action over ridden")
         #own['actionState'] = requestAction                     
@@ -402,7 +420,81 @@ def main():
                 else:                      
                     skater.playAction("fak_stopin", 15,1, layer=trans_layer, play_mode=0, speed=.5)
                     deck.playAction("a_reg", 15,1, layer=trans_layer, play_mode=0, speed=.5)
-                    trucks.playAction("a_reg", 15,1, layer=trans_layer, play_mode=0, speed=.5)                                             
+                    trucks.playAction("a_reg", 15,1, layer=trans_layer, play_mode=0, speed=.5)                           
+                    
+
+
+            if requestAction == 'reg_tailslide_out':
+                actionState = 'reg_tailslide_out'
+                own['actionTimer'] = 19
+                trans_playing = skater.isPlayingAction(trans_layer)
+                if trans_playing:
+                    cur_frame = skater.getActionFrame(trans_layer)
+                    #cur_frame -= 2                    
+                if trans_playing and cur_frame > 1:                
+                    skater.playAction("fak_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_fak_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_fak_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    own['actionTimer'] = cur_frame
+                else:                      
+                    skater.playAction("fak_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_fak_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_fak_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5) 
+            if requestAction == 'fak_tailslide_out':
+                actionState = 'fak_tailslide_out'
+                own['actionTimer'] = 19
+                trans_playing = skater.isPlayingAction(trans_layer)
+                if trans_playing:
+                    cur_frame = skater.getActionFrame(trans_layer)
+                    #cur_frame -= 2                    
+                if trans_playing and cur_frame > 1:                
+                    skater.playAction("reg_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("reg_noses", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    own['actionTimer'] = cur_frame
+                else:                      
+                    skater.playAction("reg_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg_noses", 30,40, layer=trans_layer, play_mode=0, speed=.5) 
+            if requestAction == 'reg_noseslide_out':
+                actionState = 'reg_noseslide_out'
+                own['actionTimer'] = 19
+                trans_playing = skater.isPlayingAction(trans_layer)
+                if trans_playing:
+                    cur_frame = skater.getActionFrame(trans_layer)
+                    #cur_frame -= 2                    
+                if trans_playing and cur_frame > 1:                
+                    skater.playAction("fak_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_fak_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_fak_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    own['actionTimer'] = cur_frame
+                else:                      
+                    skater.playAction("fak_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_fak_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_fak_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)                 
+            if requestAction == 'fak_noseslide_out':
+                actionState = 'fak_noseslide_out'
+                own['actionTimer'] = 19
+                trans_playing = skater.isPlayingAction(trans_layer)
+                if trans_playing:
+                    cur_frame = skater.getActionFrame(trans_layer)
+                    #cur_frame -= 2                    
+                if trans_playing and cur_frame > 1:                
+                    skater.playAction("reg_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg_tails", cur_frame,40, layer=trans_layer, play_mode=0, speed=.5)
+                    own['actionTimer'] = cur_frame
+                else:                      
+                    skater.playAction("reg_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    deck.playAction("a_reg_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)
+                    trucks.playAction("a_reg_tails", 30,40, layer=trans_layer, play_mode=0, speed=.5)                                           
+                    
+                                   
+                    
+                    
+                    
+                    
+                                      
                     
             if requestAction == 'reg_push':
                 own['actionTimer'] = 70
@@ -1540,7 +1632,7 @@ def main():
 
             if requestAction == 'reg_tailslide':
                 actionState = 'reg_tailslide'
-                if l_actionState != 'reg_tailslide' and l_actionState != 'reg_air_tail':
+                if l_actionState != 'reg_tailslide' and l_actionState != 'reg_air_tail' and l_actionState != 'reg_tailslide_out':
                     skater.stopAction(flip_layer)
                     deck.stopAction(flip_layer)
                     trucks.stopAction(flip_layer)                    
@@ -1553,7 +1645,7 @@ def main():
                     trucks.playAction("a_fak_noses", 30,1, layer=loop_layer, play_mode=1, speed=.5)                    
             if requestAction == 'fak_tailslide':
                 actionState = 'fak_tailslide'
-                if l_actionState != 'fak_tailslide' and l_actionState != 'fak_air_tail':
+                if l_actionState != 'fak_tailslide' and l_actionState != 'fak_air_tail' and l_actionState != 'reg_tailslide_out':
                     skater.stopAction(flip_layer)
                     deck.stopAction(flip_layer)
                     trucks.stopAction(flip_layer)                    
@@ -1567,7 +1659,7 @@ def main():
 
             if requestAction == 'reg_noseslide':
                 actionState = 'reg_noseslide'
-                if l_actionState != 'reg_noseslide' and l_actionState != 'reg_air_nose':
+                if l_actionState != 'reg_noseslide' and l_actionState != 'reg_air_nose' and l_actionState != 'reg_tailslide_out':
                     skater.stopAction(flip_layer)
                     deck.stopAction(flip_layer)
                     trucks.stopAction(flip_layer)                    
@@ -1580,7 +1672,7 @@ def main():
                     trucks.playAction("a_fak_tails", 30,1, layer=loop_layer, play_mode=1, speed=.5)                    
             if requestAction == 'fak_noseslide':
                 actionState = 'fak_noseslide'
-                if l_actionState != 'fak_noseslide' and l_actionState != 'fak_air_nose':
+                if l_actionState != 'fak_noseslide' and l_actionState != 'fak_air_nose' and l_actionState != 'reg_tailslide_out':
                     skater.stopAction(flip_layer)
                     deck.stopAction(flip_layer)
                     trucks.stopAction(flip_layer)                    
@@ -1598,15 +1690,15 @@ def main():
             if requestAction == 'reg_5050':
                 actionState = 'reg_5050'
                 #own['actionTimer'] = 0
-                skater.playAction("reg_5050", 11,30, layer=loop_layer, play_mode=1, speed=.5)
-                deck.playAction("a_reg", 11,30, layer=loop_layer, play_mode=1, speed=.5)
-                trucks.playAction("a_reg", 11,30, layer=loop_layer, play_mode=1, speed=.5)                                     
+                skater.playAction("reg_5050", 1,30, layer=loop_layer, play_mode=1, speed=.5)
+                deck.playAction("a_reg", 1,30, layer=loop_layer, play_mode=1, speed=.5)
+                trucks.playAction("a_reg", 1,30, layer=loop_layer, play_mode=1, speed=.5)                                     
             if requestAction == 'fak_5050':
                 actionState = 'fak_5050'
                 own['actionTimer'] = 0
-                skater.playAction("fak_5050", 11,30, layer=loop_layer, play_mode=1, speed=.5)
-                deck.playAction("a_reg", 11,30, layer=loop_layer, play_mode=1, speed=.5)
-                trucks.playAction("a_reg", 11,30, layer=loop_layer, play_mode=1, speed=.5)                                                                              
+                skater.playAction("fak_5050", 1,30, layer=loop_layer, play_mode=1, speed=.5)
+                deck.playAction("a_reg", 1,30, layer=loop_layer, play_mode=1, speed=.5)
+                trucks.playAction("a_reg", 1,30, layer=loop_layer, play_mode=1, speed=.5)                                                                              
 
             if requestAction == 'reg_bsboard':
                 actionState = 'reg_bsboard'
