@@ -2093,7 +2093,7 @@ def grind():
     lif = frame - own['last_invert_frame']
     if own['LAST_GRIND'] == False and grindHit == True:
         own['grindstartFrame'] = own['framenum']
-    print(own['grindstartFrame'])    
+    #print(own['grindstartFrame'])    
     if grindHit == True and own['invert_on'] == 0 and own['footplant_on'] == False and own['manual'] == 0 and lif > 40 and own['dropinTimer'] < 30:  
         gblend = 1    
         if LAST_GRIND == 0:
@@ -2877,7 +2877,7 @@ if (rTrig > 0.02 and GRAB_ON == False and r_ground.triggered == 1) or (lTrig > 0
 else:
     own["lastPump"] = False 
     own["Pump"] = False     
-     
+own['jump_stance'] = STANCE     
 if rUD > .02:    
     grindpos = own['grindpos']   
     jumpstance = own["jump_stance"]
@@ -2932,19 +2932,15 @@ if rUD > .02:
                 grindtype("fak_tailg")   
           
         
-elif q5oncd > 0:
+if q5oncd > 0:
     q5on = 0
     q5oncd = q5oncd - 1
-    own["Q5oncd"] = q5oncd
-    killact(65)
-    killact(66)
-    killact(67)
-    killact(68) 
+    own["Q5oncd"] = q5oncd 
     own["last_Opos"] = False
 #q1    
 if rUD < -0.070:
     if q2on == 0 and q8on == 0:
-        #print("q1on")
+        print("q1on")
         q1on = 1
         q1oncd = countdown
         own["Q1oncd"] = q1oncd
@@ -3000,17 +2996,21 @@ if rUD < -0.020:
                     grindtype("reg_noseslide")
                 if STANCE == 1:
                     grindtype("fak_noseslide")               
+
+if rUD > -0.020 and rUD <= .020 and LAST_GRIND == False:
+    if own['grindpos'] == 'reg_5050':
+        grindtype("reg_5050")
+    if own['grindpos'] == 'fak_5050':
+        grindtype("fak_5050")
+        
+    
    
-elif q1oncd > 0:
+if q1oncd > 0:
     q1on = 0
     q1oncd = q1oncd - 1
     own["Q1oncd"] = q1oncd
-    killact(73)
-    killact(74)
-    killact(71)
-    killact(72)
     own["last_nOpos"] = False   
-       
+#print(q1oncd)       
 #q7
 if rLR < -0.070:
     if q8on == 0 and q6on == 0:
@@ -3926,6 +3926,7 @@ def grind_turn():
         cont.deactivate(own.actuators['grindoutRight'])
         cont.deactivate(own.actuators['grindoutLeft'])   
     if grindHit == True and jumping == None and sincegrinding > 20:
+    #if grindHit == True and jumping == None:
         outloc = 0.022
         bsoutloc = .07
         bsoutvel = .1
@@ -4313,8 +4314,13 @@ own["sel"] = bkBut
 if r_ground.triggered and own["jump_timer"] < 20:
     force2 = [0.0, 0, -10]
     own.applyForce(force2, True)
-
-if grindDar == False:
+#print('grindtouch = ',  own['grindTouch'])
+if grindDar == False and r_ground.triggered and own['grindTouch'] == False:
     own['grindType'] = ''
+<<<<<<< HEAD
 print('hello gogs')
 #print(own['grindType'])
+=======
+
+
+>>>>>>> f88ff84d3eadbe0637efc182134be268550e7644
