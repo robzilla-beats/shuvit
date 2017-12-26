@@ -4316,5 +4316,5 @@ if r_ground.triggered and own["jump_timer"] < 20:
 
 if grindDar == False:
     own['grindType'] = ''
-
+print('hello gogs')
 #print(own['grindType'])
